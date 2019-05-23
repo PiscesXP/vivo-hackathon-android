@@ -32,7 +32,7 @@ public class HttpRequest {
     private static volatile HttpRequest mInstance;//单例引用
 
     private OkHttpClient mOkHttpClient;//okHttpClient 实例
-    private Handler okHttpHandler;//全局处理子线程和M主线程通信
+    private Handler threadHandler;//全局处理子线程和M主线程通信
 
 
     private HttpRequest(Context context) {
@@ -43,7 +43,7 @@ public class HttpRequest {
                 .writeTimeout(10, TimeUnit.SECONDS)//设置写入超时时间
                 .build();
         //初始化Handler
-        okHttpHandler = new Handler(context.getMainLooper());
+        threadHandler = new Handler(context.getMainLooper());
     }
 
     public static HttpRequest getInstance(Context context) {
@@ -84,11 +84,14 @@ public class HttpRequest {
         Log.i(TAG, "Get:" + url);
         Request.Builder builder = new Request.Builder();
         builder.url(url);
+        builder.header("Connection","keep-alive");
+        builder.header("Cookie",CookieManager.getCookie());
         if (requestBody != null) {
             builder.post(requestBody);
         }
         final Request request = builder.build();
         final Call call = mOkHttpClient.newCall(request);
+
         try {
             call.enqueue(new Callback() {
                 @Override
@@ -100,6 +103,9 @@ public class HttpRequest {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     Log.i(TAG, "Http succ.");
+                    //handle set-cookie
+                    CookieManager.setCookie(response.header("Set-Cookie"));
+                    CookieManager.setCookie(response.header("set-cookie"));
                     successCallback(response, callback);
                 }
             });
@@ -110,57 +116,8 @@ public class HttpRequest {
     }
 
 
-    private <T> Call requestPostByAsyn(String url, JSONObject param, final HttpRequestCallback callBack) {
-        Log.e(TAG, "Received json:" + param.toString());
-        try {
-            Log.e(TAG, "1");
-            RequestBody body = RequestBody.create(MEDIA_TYPE_JSON, param.toString());
-            Log.e(TAG, "2");
-
-            final Request request = addHeaders().url(url).post(body).build();
-
-            Log.e(TAG, "3");
-
-            final Call call = mOkHttpClient.newCall(request);
-            Log.e(TAG, "before enqueue");
-            call.enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    failedCallBack("访问失败", callBack);
-                    Log.e(TAG, e.toString());
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    if (response.isSuccessful()) {
-                        successCallback(response, callBack);
-                    } else {
-                        System.out.println(response.body().string());
-                        failedCallBack("服务器错误", callBack);
-                    }
-                }
-            });
-            return call;
-        } catch (Exception e) {
-            Log.e(TAG, e.toString());
-        }
-        return null;
-    }
-
-
-    private Request.Builder addHeaders() {
-        Request.Builder builder = new Request.Builder()
-                .addHeader("Connection", "keep-alive")
-                .addHeader("platform", "2")
-                .addHeader("phoneModel", Build.MODEL)
-                .addHeader("systemVersion", Build.VERSION.RELEASE)
-                .addHeader("appVersion", "3.2.0");
-        return builder;
-    }
-
-
     private <T> void successCallback(final Response response, final HttpRequestCallback callBack) {
-        okHttpHandler.post(new Runnable() {
+        threadHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (callBack != null) {
@@ -171,7 +128,7 @@ public class HttpRequest {
     }
 
     private <T> void failedCallBack(final String errorMsg, final HttpRequestCallback callBack) {
-        okHttpHandler.post(new Runnable() {
+        threadHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (callBack != null) {

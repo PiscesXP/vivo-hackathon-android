@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -72,18 +73,20 @@ public class MainActivity extends AppCompatActivity implements HttpRequestCallba
         JSONObject loginJson = new JSONObject();
         loginJson.put("userName", username);
         loginJson.put("passWord", password);
-        HttpRequest.getInstance(this).post("http://192.168.2.141:8080/app/login", loginJson, this);
+        HttpRequest.getInstance(this).post("http://192.168.2.210:8080/app/login", loginJson, this);
     }
 
     private void fetchButtonClickHandler() {
-        HttpRequest.getInstance(this).get("http://192.168.2.141:8080/text", this);
+        HttpRequest.getInstance(this).get("http://192.168.2.210:8080/test", this);
     }
 
 
     @Override
     public void onSucc(Response response) {
         try {
-            mTextMessage.setText(response.body().string());
+            String responseText = response.body().string();
+            mTextMessage.setText(responseText);
+            Toast.makeText(this,responseText, Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();
         }
