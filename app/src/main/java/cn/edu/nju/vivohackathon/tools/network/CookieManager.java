@@ -17,7 +17,7 @@ public class CookieManager {
         }
         Log.i(TAG, "Got cookie:" + cookie);
         for (String pair : cookie.split(";")) {
-            String splited[] = pair.replaceAll("\\s", "").split("=");
+            String splited[] = pair.replaceAll("^\\s", "").split("=");
             if (splited.length == 2) {
                 sCookieMap.put(splited[0], splited[1]);
             }
@@ -33,10 +33,10 @@ public class CookieManager {
             }
             String value = sCookieMap.get(key);
             cookie += key + "=" + value;
-            cookie += ";";
+            cookie += "; ";
         }
         if (cookie.length() > 0) {
-            cookie = cookie.substring(0, cookie.length() - 1);
+            cookie = cookie.substring(0, cookie.length() - 2);
         }
         Log.i(TAG, "Put cookie:" + cookie);
         return cookie;
