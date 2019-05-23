@@ -4,13 +4,27 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.1'
-        
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+    }
+}
+
+plugins {
+    id "org.sonarqube" version "2.7"
+}
+apply plugin: "org.sonarqube"
+
+sonarqube {
+    properties {
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.host.url", "http://aliyun.piscesxp.xyz:9000"
+        property "sonar.login", "0a09df33c570680736a0118eb30fe54526da9f56"
+        property "sonar.projectKey", "vivo-hackathon-android"
     }
 }
 
@@ -18,7 +32,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
+
     }
 }
 
