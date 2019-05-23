@@ -1,5 +1,7 @@
 package cn.edu.nju.vivohackathon;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -48,6 +50,14 @@ public class MainActivity extends AppCompatActivity implements HttpRequestCallba
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        //读取已保存的账号密码
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String savedUsername = sharedPreferences.getString(getString(R.string.preference_username), "");
+        String savedPassword = sharedPreferences.getString(getString(R.string.preference_password), "");
+        EditText etUsername = findViewById(R.id.etUsername);
+        etUsername.setText(savedUsername);
+        EditText etPassword = findViewById(R.id.etPassword);
+        etPassword.setText(savedPassword);
 
         //set listeners
         Button loginButton = findViewById(R.id.btnLogin);
@@ -74,6 +84,12 @@ public class MainActivity extends AppCompatActivity implements HttpRequestCallba
         loginJson.put("userName", username);
         loginJson.put("passWord", password);
         HttpRequest.getInstance(this).post("http://192.168.2.210:8080/app/login", loginJson, this);
+        //保存登录账号密码
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        sharedPreferences.edit()
+                .putString(getString(R.string.preference_username), username)
+                .putString(getString(R.string.preference_password), password)
+                .apply();
     }
 
     private void fetchButtonClickHandler() {
@@ -86,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements HttpRequestCallba
         try {
             String responseText = response.body().string();
             mTextMessage.setText(responseText);
-            Toast.makeText(this,responseText, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, responseText, Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,6 +111,6 @@ public class MainActivity extends AppCompatActivity implements HttpRequestCallba
 
     @Override
     public void onError(String errorMsg) {
-        mTextMessage.setText("Error:" + errorMsg);
+        Toast.makeText(this, errorMsg, Toast.LENGTH_LONG).show();
     }
 }
