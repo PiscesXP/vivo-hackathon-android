@@ -1,7 +1,6 @@
 package cn.edu.nju.vivohackathon.tools.network;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -38,6 +37,7 @@ public class HttpRequest {
     private HttpRequest(Context context) {
         //初始化OkHttpClient
         mOkHttpClient = new OkHttpClient().newBuilder()
+                .cookieJar(new MyCookieJar())
                 .connectTimeout(10, TimeUnit.SECONDS)//设置超时时间
                 .readTimeout(10, TimeUnit.SECONDS)//设置读取超时时间
                 .writeTimeout(10, TimeUnit.SECONDS)//设置写入超时时间
@@ -84,8 +84,6 @@ public class HttpRequest {
         Log.i(TAG, "Get:" + url);
         Request.Builder builder = new Request.Builder();
         builder.url(url);
-        builder.header("Connection","keep-alive");
-        builder.header("Cookie",CookieManager.getCookie());
         if (requestBody != null) {
             builder.post(requestBody);
         }
@@ -103,9 +101,6 @@ public class HttpRequest {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     Log.i(TAG, "Http succ.");
-                    //handle set-cookie
-                    CookieManager.setCookie(response.header("Set-Cookie"));
-                    CookieManager.setCookie(response.header("set-cookie"));
                     successCallback(response, callback);
                 }
             });
