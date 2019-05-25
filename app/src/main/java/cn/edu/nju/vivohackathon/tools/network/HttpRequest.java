@@ -111,7 +111,7 @@ public class HttpRequest {
     }
 
 
-    private <T> void successCallback(final Response response, final HttpRequestCallback callBack) {
+    private void successCallback(final Response response, final HttpRequestCallback callBack) {
         threadHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -122,7 +122,7 @@ public class HttpRequest {
         });
     }
 
-    private <T> void failedCallBack(final String errorMsg, final HttpRequestCallback callBack) {
+    private void failedCallBack(final String errorMsg, final HttpRequestCallback callBack) {
         threadHandler.post(new Runnable() {
             @Override
             public void run() {
