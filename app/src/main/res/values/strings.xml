@@ -7,6 +7,15 @@
 
     <string name="network_error">网络连接失败</string>
     <string name="comment_success">评论成功</string>
+    <string name="login_succ">登录成功</string>
+    <string name="login_fail">登录失败</string>
+    <string name="money_add">充值成功</string>
+    <string name="money_spent">购买成功</string>
+    <string name="money_spend_fail">购买失败，余额不足</string>
+
+
+    <string name="login_register">登录/注册</string>
+    <string name="recharge">充值</string>
 
     <!--SharedPreferences使用的key-->
     <string name="preference_file_key">my_preference</string>
@@ -14,5 +23,19 @@
     <string name="preference_password">password</string>
     <string name="preference_userid">userid</string>
     <string name="preference_shared">my_shared</string>
+
+    <string name="title_activity_guide">GuideActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="find">发现</string>
+    <string name="kind">类别</string>
+    <string name="account">账号</string>
+    <string name="mine">我的</string>
+    <string name="comment_hint">输入评论...</string>
+    <string name="add_comment">评论</string>
+    <string name="default_username">holyshit</string>
+    <string name="default_password">powershit</string>
+    <string name="password_hint">密码</string>
+    <string name="username_hint">用户名</string>
     <!--key-->
 </resources>

@@ -46,6 +46,7 @@ public class Comment {
     }
 
     public void getCommentList(int gameID){
+
         Log.i(TAG,"Getting comment of game:" + gameID);
         JSONObject json = new JSONObject();
         json.put("gameID",gameID);
@@ -55,6 +56,7 @@ public class Comment {
                 if(response.isSuccessful()){
                     //TODO
                     JSONObject json = new JSONObject();
+
                 }
             }
 
