@@ -179,12 +179,17 @@ public class UserInfo {
                 .callback(new PowerPostCallback() {
                     @Override
                     public void onFail(String errorMessage) {
+                        Log.e(TAG,"Failed to follow:" + errorMessage);
                         //TODO
                     }
 
                     @Override
                     public void onSuccess(JSONObject resultJson) {
-                        //TODO
+                        boolean success = resultJson.getIntValue("succ") == 0;
+                        if(success){
+                            //TODO
+                            Toast.makeText(mContext,"关注成功",Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }
@@ -196,6 +201,7 @@ public class UserInfo {
                 .callback(new PowerPostCallback() {
                     @Override
                     public void onFail(String errorMessage) {
+                        Log.e(TAG,"Failed to find user:" + errorMessage);
                         //TODO
                     }
 
@@ -205,6 +211,24 @@ public class UserInfo {
                         String userID = resultJson.getString("id");
                         String userAvatarBase64 = resultJson.getString("img");
                         //TODO
+                    }
+                });
+    }
+
+    public void getAchievement(String userID) {
+        PowerPost
+                .request(mContext, "getAchievement")
+                .data("userID", userID)
+                .callback(new PowerPostCallback() {
+                    @Override
+                    public void onFail(String errorMessage) {
+                        Log.e(TAG,"Failed to fetch achievement:" + errorMessage);
+                    }
+
+                    @Override
+                    public void onSuccess(JSONObject resultJson) {
+                        //TODO
+
                     }
                 });
     }

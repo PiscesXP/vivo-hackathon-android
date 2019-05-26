@@ -56,7 +56,8 @@ public class Comment {
                 if(response.isSuccessful()){
                     //TODO
                     JSONObject json = new JSONObject();
-
+                    json.getJSONArray("");
+                    String userID = json.getString("userID");
                 }
             }
 
