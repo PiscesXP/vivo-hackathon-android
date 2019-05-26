@@ -2,6 +2,8 @@ package cn.edu.nju.vivohackathon;
 
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,10 +23,15 @@ import cn.edu.nju.vivohackathon.ui.discover.GameInfo;
 import cn.edu.nju.vivohackathon.ui.discover.GameInfoAdapter;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView mTextMessage;
 
     private UserInfo mUserInfo;
     private Comment mComment;
+
+    private Fragment mFragment;
+    private AccountFragment accountFragment;
+    private CreationFragment creationFragment;
+    private DiscoverFragment discoverFragment;
+    private FriendFragment friendFragment;
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -35,16 +42,16 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_1:
-                    mTextMessage.setText(R.string.title_home);
+                    switchFragment(discoverFragment);
                     return true;
                 case R.id.navigation_2:
-                    mTextMessage.setText(R.string.title_home);
+                    switchFragment(creationFragment);
                     return true;
                 case R.id.navigation_3:
-                    mTextMessage.setText(R.string.title_dashboard);
+                    switchFragment(friendFragment);
                     return true;
                 case R.id.navigation_4:
-                    mTextMessage.setText(R.string.title_notifications);
+                    switchFragment(accountFragment);
                     return true;
             }
             return false;
@@ -56,19 +63,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.discover_nav_view);
-        mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        initViews();
+
         mUserInfo = new UserInfo(getApplicationContext(), this);
-        mComment = new Comment(getApplicationContext(),this);
+        mComment = new Comment(getApplicationContext(), this);
 
         //设置listeners
         Button loginButton = findViewById(R.id.btnLogin);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mUserInfo.isLogin()){
-                    Toast.makeText(getApplicationContext(),"账号已经登录",Toast.LENGTH_SHORT).show();
+                if (mUserInfo.isLogin()) {
+                    Toast.makeText(getApplicationContext(), "账号已经登录", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 String username = ((EditText) findViewById(R.id.etUsername)).getText().toString();
@@ -86,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String comment = ((EditText) findViewById(R.id.etUsername)).getText().toString();
-                mComment.addComment(0,comment);
+                mComment.addComment(0, comment);
 
             }
         });
@@ -100,13 +108,40 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //发现页面
+        /*
         RecyclerView recyclerView = findViewById(R.id.discover_recycleview);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         GameInfoAdapter gameInfoAdapter = new GameInfoAdapter(new ArrayList<GameInfo>());
         recyclerView.setAdapter(gameInfoAdapter);
+*/
+        //fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().add(R.id.main_fragment, discoverFragment).commit();
+        mFragment = discoverFragment;
     }
 
+    private void initViews() {
+        discoverFragment = new DiscoverFragment();
+        accountFragment = new AccountFragment();
+        friendFragment = new FriendFragment();
+        creationFragment = new CreationFragment();
+    }
+
+    /**
+     * 切换fragment
+     * */
+    private void switchFragment(Fragment fragment) {
+        if (mFragment != fragment) {
+            if (!fragment.isAdded()) {
+                getSupportFragmentManager().beginTransaction().hide(mFragment)
+                        .add(R.id.main_fragment, fragment).commit();
+            } else {
+                getSupportFragmentManager().beginTransaction().hide(mFragment).show(fragment).commit();
+            }
+            mFragment = fragment;
+        }
+    }
 
 }

@@ -96,7 +96,7 @@ public class GuideActivity extends AppCompatActivity {
 
         };
 
-        timer.schedule(task, 2500);
+        timer.schedule(task, 500);
 
 
 

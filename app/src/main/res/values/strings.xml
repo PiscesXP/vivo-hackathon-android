@@ -37,5 +37,8 @@
     <string name="default_password">powershit</string>
     <string name="password_hint">密码</string>
     <string name="username_hint">用户名</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--key-->
 </resources>
