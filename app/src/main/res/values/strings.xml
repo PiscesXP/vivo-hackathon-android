@@ -6,6 +6,7 @@
 
 
     <string name="network_error">网络连接失败</string>
+    <string name="comment_success">评论成功</string>
 
     <!--SharedPreferences使用的key-->
     <string name="preference_file_key">my_preference</string>
