@@ -7,11 +7,13 @@ import com.alibaba.fastjson.JSONObject;
 
 public class PowerShitData {
     private static final String TAG = PowerShitData.class.getSimpleName();
+    private int mReqID;
     private JSONObject mJSONObject;
     private Context mContext;
     private String mUrl;
 
-    protected PowerShitData(Context context, final String url) {
+    protected PowerShitData(int reqID, Context context, final String url) {
+        mReqID = reqID;
         mJSONObject = new JSONObject();
         mContext = context;
         mUrl = url;
@@ -24,6 +26,7 @@ public class PowerShitData {
     }
 
     public void callback(PowerPostCallback powerPostCallback) {
-        powerPostCallback.request(mContext, mUrl, mJSONObject);
+        PowerPostExecutor powerPostExecutor = new PowerPostExecutor(powerPostCallback);
+        powerPostExecutor.request(mReqID, mContext, mUrl, mJSONObject);
     }
 }
