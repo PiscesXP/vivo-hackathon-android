@@ -6,25 +6,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.alibaba.fastjson.JSONObject;
 
-import cn.edu.nju.vivohackathon.businesslogic.account.UserInfo;
 import cn.edu.nju.vivohackathon.businesslogic.comment.Comment;
-import cn.edu.nju.vivohackathon.ui.discover.GameInfo;
-import cn.edu.nju.vivohackathon.ui.discover.GameInfoAdapter;
+import cn.edu.nju.vivohackathon.tools.network.powerpost.PowerPostCallback;
+import cn.edu.nju.vivohackathon.tools.network.powerpost.PowerPost;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PowerPostCallback {
 
-    private UserInfo mUserInfo;
     private Comment mComment;
 
     private Fragment mFragment;
@@ -68,10 +59,15 @@ public class MainActivity extends AppCompatActivity {
 
         initViews();
 
-        mUserInfo = new UserInfo(getApplicationContext(), this);
         mComment = new Comment(getApplicationContext(), this);
 
+        PowerPost
+                .request(123,getApplicationContext(),"/login")
+                .data("userName","admin")
+                .callback(this);
+
         //设置listeners
+        /*
         Button loginButton = findViewById(R.id.btnLogin);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
         Button addCommentButton = findViewById(R.id.btnAddComment);
         addCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 mComment.getCommentList(0);
             }
         });
+*/
 
         //发现页面
         /*
@@ -146,4 +142,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onFail(int reqID, String errorMessage) {
+
+    }
+
+    @Override
+    public void onSuccess(int reqID, JSONObject resultJson) {
+
+    }
 }

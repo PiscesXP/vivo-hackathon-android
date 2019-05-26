@@ -9,7 +9,6 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONObject;
 
 import cn.edu.nju.vivohackathon.R;
-import cn.edu.nju.vivohackathon.businesslogic.account.UserInfo;
 import cn.edu.nju.vivohackathon.tools.network.HttpRequest;
 import cn.edu.nju.vivohackathon.tools.network.HttpRequestCallback;
 import okhttp3.Response;
@@ -18,7 +17,7 @@ public class Comment {
     private Context mContext;
     private AppCompatActivity mAppCompatActivity;
 
-    private static final String TAG = UserInfo.class.getSimpleName();
+    private static final String TAG = Comment.class.getSimpleName();
 
     public Comment(Context context, AppCompatActivity appCompatActivity) {
         mContext = context;

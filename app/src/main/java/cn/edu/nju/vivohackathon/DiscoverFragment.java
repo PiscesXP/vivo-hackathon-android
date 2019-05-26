@@ -4,9 +4,16 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+
+import cn.edu.nju.vivohackathon.ui.discover.GameInfo;
+import cn.edu.nju.vivohackathon.ui.discover.GameInfoAdapter;
 
 
 /**
@@ -26,6 +33,8 @@ public class DiscoverFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private View mView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,7 +73,21 @@ public class DiscoverFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_discover, container, false);
+        mView = inflater.inflate(R.layout.fragment_discover, container, false);
+
+        //加入discover
+        RecyclerView recyclerView = mView.findViewById(R.id.discover_recycleview);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        //TODO 加入数据
+        ArrayList<GameInfo> gameInfoArrayList = new ArrayList<>();
+        gameInfoArrayList.add(new GameInfo("游戏1","描述1",null,1));
+        gameInfoArrayList.add(new GameInfo("游戏2","描述2",null,2));
+        GameInfoAdapter gameInfoAdapter = new GameInfoAdapter(gameInfoArrayList);
+        recyclerView.setAdapter(gameInfoAdapter);
+
+        return mView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
