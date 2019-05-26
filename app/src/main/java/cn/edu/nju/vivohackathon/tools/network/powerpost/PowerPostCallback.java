@@ -13,8 +13,15 @@ import okhttp3.ResponseBody;
 public abstract class PowerPostCallback {
     private static final String TAG = PowerPostCallback.class.getSimpleName();
 
-    protected void request(Context context, final String url, JSONObject requestJson) {
+    private static final int MAX_RETRIES = 2;
 
+    private int mRetry = 0;
+
+    protected void request(Context context, final String url, JSONObject requestJson) {
+        sendRequest(context, url, requestJson);
+    }
+
+    private void sendRequest(final Context context, final String url, final JSONObject requestJson) {
         HttpRequest.getInstance(context).post(url, requestJson, new HttpRequestCallback() {
             @Override
             public void onSucc(Response response) {
@@ -42,8 +49,13 @@ public abstract class PowerPostCallback {
 
             @Override
             public void onError(String errorMsg) {
-                Log.e(TAG, errorMsg);
-                onFail(errorMsg);
+                Log.e(TAG, "Error on request " + url + ", errorMessage:" + errorMsg);
+                if (++mRetry <= MAX_RETRIES) {
+                    Log.i(TAG, String.format("Retrying %s... (%d/%d)", url, mRetry, MAX_RETRIES));
+                    sendRequest(context, url, requestJson);
+                } else {
+                    onFail(errorMsg);
+                }
             }
         });
     }
