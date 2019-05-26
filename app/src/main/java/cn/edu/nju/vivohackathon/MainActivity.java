@@ -15,12 +15,17 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 
+import cn.edu.nju.vivohackathon.businesslogic.account.UserInfo;
 import cn.edu.nju.vivohackathon.tools.network.HttpRequestCallback;
 import cn.edu.nju.vivohackathon.tools.network.HttpRequest;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements HttpRequestCallback {
     private TextView mTextMessage;
+
+    private UserInfo mUserInfo;
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -49,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements HttpRequestCallba
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        UserInfo userInfo = new UserInfo(getApplicationContext(),this);
 
         //读取已保存的账号密码
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -113,4 +120,6 @@ public class MainActivity extends AppCompatActivity implements HttpRequestCallba
     public void onError(String errorMsg) {
         Toast.makeText(this, errorMsg, Toast.LENGTH_LONG).show();
     }
+
+
 }
