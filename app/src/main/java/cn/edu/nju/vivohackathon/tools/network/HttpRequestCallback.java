@@ -6,7 +6,7 @@ public interface HttpRequestCallback {
     /**
      * 响应成功
      */
-    void onSucc(Response result);
+    void onSucc(Response response);
 
     /**
      * 响应失败

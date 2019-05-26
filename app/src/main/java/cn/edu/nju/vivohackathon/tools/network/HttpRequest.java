@@ -26,6 +26,8 @@ public class HttpRequest {
     private static final MediaType MEDIA_TYPE_XML = MediaType.parse("application/xml; charset=utf-8");//mdiatype 这个需要和服务端保持一致
     private static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");//mdiatype 这个需要和服务端保持一致
 
+    private static final String DEFAULT_SERVER = "http://localhost:8080/";
+
     private static final String TAG = HttpRequest.class.getSimpleName();
 
     private static volatile HttpRequest mInstance;//单例引用
@@ -38,9 +40,9 @@ public class HttpRequest {
         //初始化OkHttpClient
         mOkHttpClient = new OkHttpClient().newBuilder()
                 .cookieJar(new MyCookieJar())
-                .connectTimeout(10, TimeUnit.SECONDS)//设置超时时间
-                .readTimeout(10, TimeUnit.SECONDS)//设置读取超时时间
-                .writeTimeout(10, TimeUnit.SECONDS)//设置写入超时时间
+                .connectTimeout(5, TimeUnit.SECONDS)//设置超时时间
+                .readTimeout(5, TimeUnit.SECONDS)//设置读取超时时间
+                .writeTimeout(5, TimeUnit.SECONDS)//设置写入超时时间
                 .build();
         //初始化Handler
         threadHandler = new Handler(context.getMainLooper());
@@ -74,13 +76,36 @@ public class HttpRequest {
     }
 
     /**
+     * 同步请求.
+     * @return Null if error.
+     * */
+    @Nullable
+    public Response postSync(final String url, @NonNull String json) {
+        Request.Builder builder = new Request.Builder();
+        builder.url(url);
+        builder.post(RequestBody.create(MEDIA_TYPE_JSON, json));
+        Request request = builder.build();
+        Call call = mOkHttpClient.newCall(request);
+        try {
+            return call.execute();
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
+        return null;
+    }
+
+    /**
      * 发送Get/Post请求.
      *
      * @param url         url
      * @param requestBody 若为Null则请求为Get,否则为Post.
      * @param callback
      */
-    private Call sendRequest(@NonNull final String url, @Nullable RequestBody requestBody, @NonNull final HttpRequestCallback callback) {
+    private Call sendRequest(@NonNull String url, @Nullable RequestBody requestBody, @NonNull final HttpRequestCallback callback) {
+        if (!url.matches("^http.*$")) {
+            //自动加上我们服务器的地址
+            url = DEFAULT_SERVER + url;
+        }
         Log.i(TAG, "Get:" + url);
         Request.Builder builder = new Request.Builder();
         builder.url(url);
