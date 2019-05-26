@@ -14,13 +14,19 @@
         android:layout_height="match_parent">
 
         <SearchView
-            android:id="@+id/searchView"
+            android:id="@+id/friend_searchView"
             android:layout_width="270dp"
             android:layout_height="45dp"
-            tools:layout_editor_absoluteX="70dp"
-            tools:layout_editor_absoluteY="57dp" />
+            android:layout_marginStart="38dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="38dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ScrollView
+            android:id="@+id/friend_scrollView"
             android:layout_width="419dp"
             android:layout_height="607dp"
             android:layout_marginStart="8dp"
@@ -30,7 +36,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView">
+            app:layout_constraintTop_toBottomOf="@+id/friend_searchView">
 
             <LinearLayout
                 android:layout_width="match_parent"
