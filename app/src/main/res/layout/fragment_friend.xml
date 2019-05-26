@@ -6,9 +6,18 @@
     tools:context=".FriendFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/friend_title"
+            android:layout_width="102dp"
+            android:layout_height="37dp"
+            android:text="@string/friend_title"
+            tools:layout_editor_absoluteX="154dp"
+            tools:layout_editor_absoluteY="37dp" />
+    </android.support.constraint.ConstraintLayout>
 </FrameLayout>
