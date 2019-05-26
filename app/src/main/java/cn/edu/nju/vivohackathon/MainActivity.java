@@ -1,11 +1,11 @@
 package cn.edu.nju.vivohackathon;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -13,17 +13,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSONObject;
+import java.util.ArrayList;
 
 import cn.edu.nju.vivohackathon.businesslogic.account.UserInfo;
-import cn.edu.nju.vivohackathon.tools.network.HttpRequestCallback;
-import cn.edu.nju.vivohackathon.tools.network.HttpRequest;
-import okhttp3.Response;
+import cn.edu.nju.vivohackathon.businesslogic.comment.Comment;
+import cn.edu.nju.vivohackathon.ui.discover.GameInfo;
+import cn.edu.nju.vivohackathon.ui.discover.GameInfoAdapter;
 
-public class MainActivity extends AppCompatActivity implements HttpRequestCallback {
+public class MainActivity extends AppCompatActivity {
     private TextView mTextMessage;
 
     private UserInfo mUserInfo;
+    private Comment mComment;
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -54,74 +55,57 @@ public class MainActivity extends AppCompatActivity implements HttpRequestCallba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        BottomNavigationView navView = findViewById(R.id.discover_nav_view);
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        UserInfo userInfo = new UserInfo(getApplicationContext(),this);
+        mUserInfo = new UserInfo(getApplicationContext(), this);
+        mComment = new Comment(getApplicationContext(),this);
 
-        //读取已保存的账号密码
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        String savedUsername = sharedPreferences.getString(getString(R.string.preference_username), "");
-        String savedPassword = sharedPreferences.getString(getString(R.string.preference_password), "");
-        EditText etUsername = findViewById(R.id.etUsername);
-        etUsername.setText(savedUsername);
-        EditText etPassword = findViewById(R.id.etPassword);
-        etPassword.setText(savedPassword);
-
-        //set listeners
+        //设置listeners
         Button loginButton = findViewById(R.id.btnLogin);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginButtonClickHandler();
+                if(mUserInfo.isLogin()){
+                    Toast.makeText(getApplicationContext(),"账号已经登录",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String username = ((EditText) findViewById(R.id.etUsername)).getText().toString();
+                String password = ((EditText) findViewById(R.id.etPassword)).getText().toString();
+                if (username.matches("^.{6,16}$") && password.matches("^.{6,16}$")) {
+                    mUserInfo.register(username, password);
+                } else {
+                    Toast.makeText(getApplicationContext(), "账号/密码太短", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-        Button fetchButton = findViewById(R.id.btnFetch);
-        fetchButton.setOnClickListener(new View.OnClickListener() {
+        Button addCommentButton = findViewById(R.id.btnAddComment);
+        addCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fetchButtonClickHandler();
+                String comment = ((EditText) findViewById(R.id.etUsername)).getText().toString();
+                mComment.addComment(0,comment);
+
             }
         });
-    }
 
-    private void loginButtonClickHandler() {
-        String username = ((EditText) findViewById(R.id.etUsername)).getText().toString();
-        String password = ((EditText) findViewById(R.id.etPassword)).getText().toString();
-        JSONObject loginJson = new JSONObject();
-        loginJson.put("userName", username);
-        loginJson.put("passWord", password);
-        HttpRequest.getInstance(this).post("http://192.168.2.210:8080/app/login", loginJson, this);
-        //保存登录账号密码
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        sharedPreferences.edit()
-                .putString(getString(R.string.preference_username), username)
-                .putString(getString(R.string.preference_password), password)
-                .apply();
-    }
+        Button getCommentButton = findViewById(R.id.btnGetComment);
+        getCommentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mComment.getCommentList(0);
+            }
+        });
 
-    private void fetchButtonClickHandler() {
-        HttpRequest.getInstance(this).get("http://192.168.2.210:8080/test", this);
-    }
-
-
-    @Override
-    public void onSucc(Response response) {
-        try {
-            String responseText = response.body().string();
-            mTextMessage.setText(responseText);
-            Toast.makeText(this, responseText, Toast.LENGTH_LONG).show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @Override
-    public void onError(String errorMsg) {
-        Toast.makeText(this, errorMsg, Toast.LENGTH_LONG).show();
+        //发现页面
+        RecyclerView recyclerView = findViewById(R.id.discover_recycleview);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        GameInfoAdapter gameInfoAdapter = new GameInfoAdapter(new ArrayList<GameInfo>());
+        recyclerView.setAdapter(gameInfoAdapter);
     }
 
 

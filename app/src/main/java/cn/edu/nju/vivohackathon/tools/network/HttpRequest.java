@@ -26,7 +26,7 @@ public class HttpRequest {
     private static final MediaType MEDIA_TYPE_XML = MediaType.parse("application/xml; charset=utf-8");//mdiatype 这个需要和服务端保持一致
     private static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");//mdiatype 这个需要和服务端保持一致
 
-    private static final String DEFAULT_SERVER = "http://localhost:8080/";
+    private static final String DEFAULT_SERVER = "http://172.20.10.13:8080/";
 
     private static final String TAG = HttpRequest.class.getSimpleName();
 
@@ -41,8 +41,8 @@ public class HttpRequest {
         mOkHttpClient = new OkHttpClient().newBuilder()
                 .cookieJar(new MyCookieJar())
                 .connectTimeout(5, TimeUnit.SECONDS)//设置超时时间
-                .readTimeout(5, TimeUnit.SECONDS)//设置读取超时时间
-                .writeTimeout(5, TimeUnit.SECONDS)//设置写入超时时间
+                .readTimeout(4, TimeUnit.SECONDS)//设置读取超时时间
+                .writeTimeout(3, TimeUnit.SECONDS)//设置写入超时时间
                 .build();
         //初始化Handler
         threadHandler = new Handler(context.getMainLooper());
@@ -81,6 +81,7 @@ public class HttpRequest {
      * */
     @Nullable
     public Response postSync(final String url, @NonNull String json) {
+        Log.i(TAG,"Sending JSON:" + json.toString());
         Request.Builder builder = new Request.Builder();
         builder.url(url);
         builder.post(RequestBody.create(MEDIA_TYPE_JSON, json));

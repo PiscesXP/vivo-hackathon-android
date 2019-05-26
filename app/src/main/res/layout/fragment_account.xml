@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AccountFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/account_achievement_icon"
+            android:layout_width="87dp"
+            android:layout_height="85dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="116dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/account_username"
+            tools:src="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/collection"
+            android:layout_width="87dp"
+            android:layout_height="85dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="64dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/account_achievement_icon"
+            tools:src="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/account_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="64dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/account_username"
+            android:layout_width="127dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="24dp"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/account_icon" />
+
+        <Button
+            android:id="@+id/account_achievement_button"
+            android:layout_width="127dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="92dp"
+            android:layout_marginTop="384dp"
+            android:text="Button"
+            app:layout_constraintStart_toEndOf="@+id/account_achievement_icon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/account_collection_button"
+            android:layout_width="127dp"
+            android:layout_height="37dp"
+            android:layout_marginStart="92dp"
+            android:layout_marginBottom="83dp"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/collection"
+            app:layout_constraintTop_toBottomOf="@+id/account_achievement_button"
+            app:layout_constraintVertical_bias="0.594" />
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>
