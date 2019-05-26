@@ -37,5 +37,6 @@
     <string name="default_password">powershit</string>
     <string name="password_hint">密码</string>
     <string name="username_hint">用户名</string>
+    <string name="friend_title">我的好友‘</string>
     <!--key-->
 </resources>
