@@ -9,24 +9,30 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import cn.edu.nju.vivohackathon.tools.network.powerpost.PowerPost;
+import cn.edu.nju.vivohackathon.tools.network.powerpost.PowerPostCallback;
 import cn.edu.nju.vivohackathon.ui.discover.GameInfo;
 import cn.edu.nju.vivohackathon.ui.discover.GameInfoAdapter;
 
 
+public class DiscoverFragment extends Fragment implements PowerPostCallback {
 
-
-public class DiscoverFragment extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-
-    private String mParam1;
-    private String mParam2;
+    private static final int REQUEST_GET_GAME_LIST = 1;
+    private static final int REQUEST_GET_GAME_INFO = 2;
 
     private View mView;
+
+    private RecyclerView mRecyclerView;
+    private List<GameInfo> mGameInfoList;
+    private GameInfoAdapter mGameInfoAdapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -36,8 +42,6 @@ public class DiscoverFragment extends Fragment {
     public static DiscoverFragment newInstance(String param1, String param2) {
         DiscoverFragment fragment = new DiscoverFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -45,10 +49,6 @@ public class DiscoverFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -58,16 +58,15 @@ public class DiscoverFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_discover, container, false);
 
         //加入discover
-        RecyclerView recyclerView = mView.findViewById(R.id.discover_recycleview);
-        recyclerView.setHasFixedSize(true);
+        mRecyclerView = mView.findViewById(R.id.discover_recycleview);
+        mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setLayoutManager(layoutManager);
         //TODO 加入数据
-        ArrayList<GameInfo> gameInfoArrayList = new ArrayList<>();
-        gameInfoArrayList.add(new GameInfo("游戏1","描述1",null,1));
-        gameInfoArrayList.add(new GameInfo("游戏2","描述2",null,2));
-        GameInfoAdapter gameInfoAdapter = new GameInfoAdapter(gameInfoArrayList);
-        recyclerView.setAdapter(gameInfoAdapter);
+        mGameInfoList = new ArrayList<>();
+        mGameInfoList.add(new GameInfo("游戏1", "描述1", null, 1));
+        mGameInfoList.add(new GameInfo("游戏2", "描述2", null, 2));
+        refreshRecyclerView();
 
         return mView;
     }
@@ -97,5 +96,62 @@ public class DiscoverFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    //-------------------------------------------
+    private void fetchGameList() {
+        PowerPost
+                .request(REQUEST_GET_GAME_LIST, getContext(), "getGameList")
+                .data("page", 0)
+                .callback(this);
+    }
+
+
+    private void fetchGameInfo(final int gameID) {
+        PowerPost
+                .request(REQUEST_GET_GAME_INFO, getContext(), "getGameInfo")
+                .data("gameID", gameID)
+                .callback(new PowerPostCallback() {
+                    @Override
+                    public void onFail(int reqID, String errorMessage) {
+                        Toast.makeText(getContext(), R.string.network_error, Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onSuccess(int reqID, JSONObject resultJson) {
+                        GameInfo gameInfo = new GameInfo(
+                                resultJson.getString("title"),
+                                resultJson.getString("description"),
+                                resultJson.getString("img"),
+                                gameID
+                        );
+                        mGameInfoList.add(gameInfo);
+                        refreshRecyclerView();
+                    }
+                });
+    }
+
+    private void refreshRecyclerView() {
+        mGameInfoAdapter = new GameInfoAdapter(mGameInfoList);
+        mRecyclerView.setAdapter(mGameInfoAdapter);
+    }
+
+    @Override
+    public void onFail(int reqID, String errorMessage) {
+        Toast.makeText(getContext(), R.string.network_error, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onSuccess(int reqID, JSONObject resultJson) {
+        switch (reqID) {
+            case REQUEST_GET_GAME_LIST:
+                //TODO
+                JSONArray array = resultJson.getJSONArray("");
+                for (int i = 0; i < array.size(); ++i) {
+                    fetchGameInfo(array.getIntValue(i));
+                }
+                break;
+            default:
+        }
     }
 }
