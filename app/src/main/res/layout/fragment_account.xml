@@ -11,66 +11,95 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/account_achievement_icon"
-            android:layout_width="87dp"
-            android:layout_height="85dp"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="116dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/account_username"
-            tools:src="@tools:sample/avatars" />
+        <TextView
+            android:id="@+id/account_amount"
+            android:layout_width="100dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.179"
+            app:layout_constraintStart_toEndOf="@+id/account_icon"
+            app:layout_constraintTop_toBottomOf="@+id/account_username" />
 
-        <ImageView
-            android:id="@+id/collection"
-            android:layout_width="87dp"
-            android:layout_height="85dp"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="64dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/account_achievement_icon"
-            tools:src="@tools:sample/avatars" />
+        <TextView
+            android:id="@+id/account_username"
+            android:layout_width="100dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.179"
+            app:layout_constraintStart_toEndOf="@+id/account_icon"
+            app:layout_constraintTop_toBottomOf="@+id/account_id" />
 
         <ImageView
             android:id="@+id/account_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="64dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="36dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/account_username"
-            android:layout_width="127dp"
-            android:layout_height="34dp"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="24dp"
+            android:id="@+id/account_id"
+            android:layout_width="100dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="44dp"
             android:text="TextView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/account_icon" />
-
-        <Button
-            android:id="@+id/account_achievement_button"
-            android:layout_width="127dp"
-            android:layout_height="47dp"
-            android:layout_marginStart="92dp"
-            android:layout_marginTop="384dp"
-            android:text="Button"
-            app:layout_constraintStart_toEndOf="@+id/account_achievement_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.179"
+            app:layout_constraintStart_toEndOf="@+id/account_icon"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/account_collection_button"
-            android:layout_width="127dp"
-            android:layout_height="37dp"
-            android:layout_marginStart="92dp"
-            android:layout_marginBottom="83dp"
-            android:text="Button"
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="131dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="184dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layoutManager="GridLayoutManager"
+            tools:listitem="@layout/recycler_view_item"
+            tools:spanCount="5" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="363dp"
+            android:layout_height="248dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/collection"
-            app:layout_constraintTop_toBottomOf="@+id/account_achievement_button"
-            app:layout_constraintVertical_bias="0.594" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.437"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.745"
+            tools:listitem="@layout/recycler_view_item_1" />
+
+        <ImageView
+            android:id="@+id/imageAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="88dp"
+            android:src="@android:drawable/btn_star_big_on"
+            app:layout_constraintStart_toEndOf="@+id/account_amount"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="88dp"
+            android:src="@android:drawable/ic_menu_share"
+            app:layout_constraintStart_toEndOf="@+id/imageAdd"
+            app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>
