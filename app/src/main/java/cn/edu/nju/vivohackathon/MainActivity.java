@@ -12,11 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import cn.edu.nju.vivohackathon.businesslogic.account.UserInfo;
+import cn.edu.nju.vivohackathon.businesslogic.comment.Comment;
 
 public class MainActivity extends AppCompatActivity {
     private TextView mTextMessage;
 
     private UserInfo mUserInfo;
+    private Comment mComment;
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         mUserInfo = new UserInfo(getApplicationContext(), this);
+        mComment = new Comment(getApplicationContext(),this);
 
         //设置listeners
         Button loginButton = findViewById(R.id.btnLogin);
@@ -62,6 +65,24 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), "账号/密码太短", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        Button addCommentButton = findViewById(R.id.btnAddComment);
+        addCommentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String comment = ((EditText) findViewById(R.id.etUsername)).getText().toString();
+                mComment.addComment(0,comment);
+
+            }
+        });
+
+        Button getCommentButton = findViewById(R.id.btnGetComment);
+        getCommentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mComment.getCommentList(0);
             }
         });
     }
