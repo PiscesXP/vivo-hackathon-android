@@ -14,5 +14,9 @@
     <string name="preference_password">password</string>
     <string name="preference_userid">userid</string>
     <string name="preference_shared">my_shared</string>
+
+    <string name="title_activity_guide">GuideActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
     <!--key-->
 </resources>
