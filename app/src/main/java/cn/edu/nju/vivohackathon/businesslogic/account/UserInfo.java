@@ -14,9 +14,11 @@ import com.alibaba.fastjson.JSONObject;
 
 
 import cn.edu.nju.vivohackathon.R;
+import cn.edu.nju.vivohackathon.tools.network.powerpost.PowerPost;
 import cn.edu.nju.vivohackathon.tools.data.DataUtility;
 import cn.edu.nju.vivohackathon.tools.network.HttpRequest;
 import cn.edu.nju.vivohackathon.tools.network.HttpRequestCallback;
+import cn.edu.nju.vivohackathon.tools.network.powerpost.PowerPostCallback;
 import okhttp3.Response;
 
 public class UserInfo {
@@ -104,33 +106,26 @@ public class UserInfo {
 
     public void register(final String username, final String password) {
         Log.e(TAG, "Registering...");
-        JSONObject json = new JSONObject();
-        json.put("userName", username);
-        json.put("passWord", password);
-        HttpRequest.getInstance(mContext).post("register", json, new HttpRequestCallback() {
-            @Override
-            public void onSucc(Response response) {
-                if (response.isSuccessful()) {
-                    try {
-                        JSONObject resultJson = JSONObject.parseObject(response.body().string());
+        PowerPost
+                .request(mContext, "register")
+                .data("userName", username)
+                .data("passWord", password)
+                .callback(new PowerPostCallback() {
+                    @Override
+                    public void onFail(String errorMessage) {
+                        Log.e(TAG, errorMessage);
+                    }
+
+                    @Override
+                    public void onSuccess(JSONObject resultJson) {
                         if (resultJson.getIntValue("success") == 0) {
                             Toast.makeText(mContext, "注册成功，自动登录中...", Toast.LENGTH_LONG).show();
                             login(username, password);
                         } else {
                             Toast.makeText(mContext, "注册失败，账号已存在", Toast.LENGTH_LONG).show();
                         }
-                    } catch (Exception e) {
-                        Log.e(TAG, e.getMessage());
                     }
-                }
-            }
-
-            @Override
-            public void onError(String errorMsg) {
-                Toast.makeText(mContext, mAppCompatActivity.getString(R.string.network_error), Toast.LENGTH_LONG).show();
-                Log.e(TAG, errorMsg);
-            }
-        });
+                });
     }
 
     /**
@@ -148,12 +143,17 @@ public class UserInfo {
         } else {
             reqUrl = "spendMoney";
         }
-        HttpRequest.getInstance(mContext).post(reqUrl, reqJson, new HttpRequestCallback() {
-            @Override
-            public void onSucc(Response response) {
-                try {
-                    if (response.isSuccessful()) {
-                        JSONObject resultJson = JSONObject.parseObject(response.body().string());
+        PowerPost
+                .request(mContext, reqUrl)
+                .data("amount", amount)
+                .callback(new PowerPostCallback() {
+                    @Override
+                    public void onFail(String errorMessage) {
+                        Log.e(TAG, errorMessage);
+                    }
+
+                    @Override
+                    public void onSuccess(JSONObject resultJson) {
                         if (amount == 0) {
                             int money = resultJson.getIntValue("amount");
                             TextView tvMoney = mAppCompatActivity.findViewById(R.id.tvMoney);
@@ -176,15 +176,6 @@ public class UserInfo {
                             }
                         }
                     }
-                } catch (Exception e) {
-                    Log.e(TAG, e.getMessage());
-                }
-            }
-
-            @Override
-            public void onError(String errorMsg) {
-                Log.e(TAG, errorMsg);
-            }
-        });
+                });
     }
 }
