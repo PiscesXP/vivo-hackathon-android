@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private CreationFragment creationFragment;
     private DiscoverFragment discoverFragment;
     private FriendFragment friendFragment;
+    private GameFragment gameFragment;
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 */
         //fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().add(R.id.main_fragment, discoverFragment).commit();
+        fragmentManager.beginTransaction().add(R.id.main_fragment, gameFragment).commit();
         mFragment = discoverFragment;
     }
 
@@ -127,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         accountFragment = new AccountFragment();
         friendFragment = new FriendFragment();
         creationFragment = new CreationFragment();
+        gameFragment = new GameFragment();
     }
 
     /**
