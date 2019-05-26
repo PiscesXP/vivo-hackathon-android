@@ -18,5 +18,9 @@
     <string name="title_activity_guide">GuideActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="find">发现</string>
+    <string name="kind">类别</string>
+    <string name="account">账号</string>
+    <string name="mine">我的</string>
     <!--key-->
 </resources>

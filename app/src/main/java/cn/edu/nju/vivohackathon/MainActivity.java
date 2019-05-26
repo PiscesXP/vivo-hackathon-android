@@ -33,13 +33,16 @@ public class MainActivity extends AppCompatActivity implements HttpRequestCallba
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
+                case R.id.navigation_1:
                     mTextMessage.setText(R.string.title_home);
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_2:
+                    mTextMessage.setText(R.string.title_home);
+                    return true;
+                case R.id.navigation_3:
                     mTextMessage.setText(R.string.title_dashboard);
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_4:
                     mTextMessage.setText(R.string.title_notifications);
                     return true;
             }
