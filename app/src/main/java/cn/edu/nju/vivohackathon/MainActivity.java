@@ -13,8 +13,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import cn.edu.nju.vivohackathon.businesslogic.account.UserInfo;
 import cn.edu.nju.vivohackathon.businesslogic.comment.Comment;
+import cn.edu.nju.vivohackathon.ui.discover.GameInfo;
+import cn.edu.nju.vivohackathon.ui.discover.GameInfoAdapter;
 
 public class MainActivity extends AppCompatActivity {
     private TextView mTextMessage;
@@ -95,13 +99,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //recycle
-        RecyclerView recyclerView = findViewById(R.id.recycler_view_record_list);
+        //发现页面
+        RecyclerView recyclerView = findViewById(R.id.discover_recycleview);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        RecordAdapter recordAdapter = new RecordAdapter(RecordUtility.readFromFileSystem());
-        recyclerView.setAdapter(recordAdapter);
+        GameInfoAdapter gameInfoAdapter = new GameInfoAdapter(new ArrayList<GameInfo>());
+        recyclerView.setAdapter(gameInfoAdapter);
     }
 
 
