@@ -114,9 +114,9 @@ public class MainActivity extends AppCompatActivity implements PowerPostCallback
 */
         //fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().add(R.id.main_fragment, gameFragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.main_fragment, discoverFragment).commit();
         mFragment = discoverFragment;
-    }
+}
 
     private void initViews() {
         discoverFragment = new DiscoverFragment();

@@ -38,5 +38,7 @@
     <string name="registerSuc">注册成功</string>
     <string name="monday">Monday</string>
     <string name="register">注  册</string>
+    <string name="friend_menu">好友</string>
+    <string name="createion_menu">创作</string>
     <!--key-->
 </resources>
