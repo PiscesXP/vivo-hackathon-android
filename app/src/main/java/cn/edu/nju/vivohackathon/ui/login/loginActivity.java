@@ -1,23 +1,26 @@
 package cn.edu.nju.vivohackathon.ui.login;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
+
+import cn.edu.nju.vivohackathon.MainActivity;
 import cn.edu.nju.vivohackathon.R;
-import cn.edu.nju.vivohackathon.businesslogic.account.UserInfo;
-import cn.edu.nju.vivohackathon.businesslogic.comment.Comment;
-import cn.edu.nju.vivohackathon.tools.network.HttpRequestCallback;
-import okhttp3.Response;
+import cn.edu.nju.vivohackathon.tools.network.powerpost.PowerPost;
+import cn.edu.nju.vivohackathon.tools.network.powerpost.PowerPostCallback;
 
-public class loginActivity extends AppCompatActivity implements HttpRequestCallback {
+public class loginActivity extends AppCompatActivity implements PowerPostCallback {
 
 
-    private UserInfo mUserInfo;
-    private Comment mComment;
+
+    public final int Request_Login  = 1 ;
+    public final int Request_Register = 2 ;
+
 
 
     @Override
@@ -26,22 +29,28 @@ public class loginActivity extends AppCompatActivity implements HttpRequestCallb
         setContentView(R.layout.activity_login);
 
 
-        mUserInfo = new UserInfo(getApplicationContext(), this);
-        mComment = new Comment(getApplicationContext(),this);
-
         //设置listeners
-        Button loginButton = findViewById(R.id.btnLogin);
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mUserInfo.isLogin()){
-                    Toast.makeText(getApplicationContext(),"账号已经登录",Toast.LENGTH_SHORT).show();
-                    return;
-                }
                 String username = ((EditText) findViewById(R.id.etUsername)).getText().toString();
                 String password = ((EditText) findViewById(R.id.etPassword)).getText().toString();
                 if (username.matches("^.{6,16}$") && password.matches("^.{6,16}$")) {
-                    mUserInfo.register(username, password);
+                    loginPost(username,password);
+                } else {
+                    Toast.makeText(getApplicationContext(), "账号/密码太短", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+        findViewById(R.id.btnRegister).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String username = ((EditText) findViewById(R.id.etUsername)).getText().toString();
+                String password = ((EditText) findViewById(R.id.etPassword)).getText().toString();
+                if (username.matches("^.{6,16}$") && password.matches("^.{6,16}$")) {
+                    registerPost(username,password);
                 } else {
                     Toast.makeText(getApplicationContext(), "账号/密码太短", Toast.LENGTH_SHORT).show();
                 }
@@ -50,14 +59,44 @@ public class loginActivity extends AppCompatActivity implements HttpRequestCallb
     }
 
 
-
     @Override
-    public void onSucc(Response response) {
-
+    public void onFail(int reqID, String errorMessage) {
+        Toast.makeText(this,R.string.network_error, Toast.LENGTH_LONG).show();
+        System.out.println(errorMessage);
     }
 
     @Override
-    public void onError(String errorMsg) {
+    public void onSuccess(int reqID, JSONObject resultJson) {
+        switch (reqID){
+            case Request_Login:GoMain();break;
+            case Request_Register:RegisterSuccess();break;
+        }
 
+    }
+
+    public void loginPost(String username,String password){
+        PowerPost.request(Request_Login,getApplicationContext(),"/login")
+                .data("userName",username)
+                .data("password",password)
+                .callback(this);
+    }
+
+    public void registerPost(String username,String password){
+        PowerPost.request(Request_Register,getApplicationContext(),"/register")
+                .data("userName",username)
+                .data("password",password)
+                .callback(this);
+    }
+
+
+    public void GoMain(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+        this.finish();
+    }
+
+    public void RegisterSuccess(){
+        Toast.makeText(this,R.string.registerSuc, Toast.LENGTH_LONG).show();
     }
 }

@@ -7,12 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import cn.edu.nju.vivohackathon.businesslogic.account.UserInfo;
-import cn.edu.nju.vivohackathon.businesslogic.comment.Comment;
 
 
 /**
@@ -67,7 +61,7 @@ public class BlankFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        
+
 
     }
 

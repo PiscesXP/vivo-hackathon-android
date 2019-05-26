@@ -12,6 +12,8 @@ import android.view.View;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cn.edu.nju.vivohackathon.ui.login.loginActivity;
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
@@ -86,7 +88,7 @@ public class GuideActivity extends AppCompatActivity {
         mContentView = findViewById(R.id.fullscreen_content);
         hide();
 
-        final Intent intent = new Intent(this, MainActivity.class);
+        final Intent intent = new Intent(this, loginActivity.class);
         Timer timer=new Timer();
 
         TimerTask task=new TimerTask(){
@@ -96,7 +98,7 @@ public class GuideActivity extends AppCompatActivity {
 
         };
 
-        timer.schedule(task, 2500);
+        timer.schedule(task, 1500);
 
 
 
@@ -106,6 +108,7 @@ public class GuideActivity extends AppCompatActivity {
     public void startActivity(Intent intent) {
         super.startActivity(intent);
         overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+        this.finish();
     }
 
     @Override
