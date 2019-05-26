@@ -18,7 +18,7 @@ public class PowerShitData {
     }
 
     public PowerShitData data(String key, Object value) {
-        Log.i(TAG, "Add data:" + key + ", value:" + value);
+        Log.i(TAG, "Add data to JSON:" + key + ", value:" + value);
         mJSONObject.put(key, value);
         return this;
     }

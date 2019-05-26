@@ -42,66 +42,57 @@ public class UserInfo {
 
     public void login(String username, String password) {
         Log.i(TAG, "login...");
-        JSONObject json = new JSONObject();
-        json.put("userName", username);
-        json.put("passWord", password);
-        HttpRequest.getInstance(mContext).post("login", json.toJSONString(), new HttpRequestCallback() {
-            @Override
-            public void onSucc(Response result) {
-                try {
-                    JSONObject json = JSONObject.parseObject(result.body().string());
-                    int succ = json.getIntValue("success");
-                    if (succ == 0) {
-                        //登录成功
-                        Toast.makeText(mContext, R.string.login_succ, Toast.LENGTH_LONG).show();
-                        String userID = json.getString("userID");
-                        DataUtility.setSharedValue(mContext, mContext.getString(R.string.preference_userid), userID);
-                        //获取用户信息
-                        JSONObject reqUserInfoJson = new JSONObject();
-                        reqUserInfoJson.put("userID", userID);
-                        HttpRequest.getInstance(mContext).post("getUserInfoByID", reqUserInfoJson, new HttpRequestCallback() {
-                            @Override
-                            public void onSucc(Response response) {
-                                try {
-                                    //设置用户信息
-                                    JSONObject resultJson = JSONObject.parseObject(response.body().string());
-
-                                    TextView tvUserName = mAppCompatActivity.findViewById(R.id.tvUserName);
-                                    tvUserName.setText(resultJson.getString("name"));
-
-                                    TextView tvMoney = mAppCompatActivity.findViewById(R.id.tvMoney);
-                                    tvMoney.setText(resultJson.getIntValue("amount"));
-
-                                    ImageView ivAvatar = mAppCompatActivity.findViewById(R.id.ivAvatar);
-                                    String base64Avatar = resultJson.getString("img");
-                                    byte[] bytes = Base64.decode(base64Avatar, Base64.DEFAULT);
-                                    Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                    ivAvatar.setImageBitmap(decodedByte);
-                                } catch (Exception e) {
-                                    Log.e(TAG, e.getMessage());
-                                }
-                            }
-
-                            @Override
-                            public void onError(String errorMsg) {
-                                Toast.makeText(mContext, mAppCompatActivity.getString(R.string.network_error), Toast.LENGTH_LONG).show();
-                                Log.e(TAG, errorMsg);
-                            }
-                        });
-                    } else {
-                        Toast.makeText(mContext, R.string.login_fail, Toast.LENGTH_LONG).show();
+        PowerPost
+                .request(mContext, "login")
+                .data("userName", username)
+                .data("passWord", password)
+                .callback(new PowerPostCallback() {
+                    @Override
+                    public void onFail(String errorMessage) {
+                        Toast.makeText(mContext, mAppCompatActivity.getString(R.string.network_error), Toast.LENGTH_LONG).show();
+                        Log.e(TAG, errorMessage);
                     }
-                } catch (Exception e) {
-                    Log.e(TAG, e.getMessage());
-                }
-            }
 
-            @Override
-            public void onError(String errorMsg) {
-                Toast.makeText(mContext, mAppCompatActivity.getString(R.string.network_error), Toast.LENGTH_LONG).show();
-                Log.e(TAG, errorMsg);
-            }
-        });
+                    @Override
+                    public void onSuccess(JSONObject resultJson) {
+                        int succ = resultJson.getIntValue("success");
+                        if (succ == 0) {
+                            //登录成功
+                            Toast.makeText(mContext, R.string.login_succ, Toast.LENGTH_LONG).show();
+                            String userID = resultJson.getString("userID");
+                            DataUtility.setSharedValue(mContext, mContext.getString(R.string.preference_userid), userID);
+                            //获取用户信息
+                            JSONObject reqUserInfoJson = new JSONObject();
+                            reqUserInfoJson.put("userID", userID);
+                            PowerPost.request(mContext, "getUserInfoByID")
+                                    .data("userID", userID)
+                                    .callback(new PowerPostCallback() {
+                                        @Override
+                                        public void onFail(String errorMessage) {
+                                            Toast.makeText(mContext, mAppCompatActivity.getString(R.string.network_error), Toast.LENGTH_LONG).show();
+                                            Log.e(TAG, errorMessage);
+                                        }
+
+                                        @Override
+                                        public void onSuccess(JSONObject resultJson) {
+                                            TextView tvUserName = mAppCompatActivity.findViewById(R.id.tvUserName);
+                                            tvUserName.setText(resultJson.getString("name"));
+
+                                            TextView tvMoney = mAppCompatActivity.findViewById(R.id.tvMoney);
+                                            tvMoney.setText(resultJson.getIntValue("amount"));
+
+                                            ImageView ivAvatar = mAppCompatActivity.findViewById(R.id.ivAvatar);
+                                            String base64Avatar = resultJson.getString("img");
+                                            byte[] bytes = Base64.decode(base64Avatar, Base64.DEFAULT);
+                                            Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                            ivAvatar.setImageBitmap(decodedByte);
+                                        }
+                                    });
+                        } else {
+                            Toast.makeText(mContext, R.string.login_fail, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
     }
 
     public void register(final String username, final String password) {
@@ -114,16 +105,16 @@ public class UserInfo {
                     @Override
                     public void onFail(String errorMessage) {
                         Log.e(TAG, errorMessage);
+                        Toast.makeText(mContext, R.string.network_error, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onSuccess(JSONObject resultJson) {
                         if (resultJson.getIntValue("success") == 0) {
                             Toast.makeText(mContext, "注册成功，自动登录中...", Toast.LENGTH_LONG).show();
-                            login(username, password);
-                        } else {
-                            Toast.makeText(mContext, "注册失败，账号已存在", Toast.LENGTH_LONG).show();
                         }
+                        //账号已存在
+                        login(username, password);
                     }
                 });
     }
@@ -159,7 +150,7 @@ public class UserInfo {
                             TextView tvMoney = mAppCompatActivity.findViewById(R.id.tvMoney);
                             tvMoney.setText(money);
                         } else {
-                            boolean success = resultJson.get("success") == 0;
+                            boolean success = resultJson.getIntValue("success") == 0;
                             queryMoney(0);  //刷新金钱
                             if (amount < 0) {
                                 //消费

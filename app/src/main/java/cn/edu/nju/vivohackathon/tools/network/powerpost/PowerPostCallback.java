@@ -27,14 +27,16 @@ public abstract class PowerPostCallback {
                     ResponseBody responseBody = response.body();
                     JSONObject resultJson;
                     if (responseBody != null) {
-                        resultJson = JSONObject.parseObject(responseBody.string());
+                        String responseText = responseBody.string();
+                        Log.i(TAG, "Response text:" + responseText);
+                        resultJson = JSONObject.parseObject(responseText);
                     } else {
                         resultJson = new JSONObject();
                     }
                     onSuccess(resultJson);
                 } catch (Exception e) {
-                    Log.e(TAG, e.getMessage());
-                    onFail(e.getMessage());
+                    Log.e(TAG, e.toString());
+                    onFail(e.toString());
                 }
             }
 
