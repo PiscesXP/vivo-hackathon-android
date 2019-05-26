@@ -27,7 +27,7 @@ public class loginActivity extends AppCompatActivity implements PowerPostCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        GoMain();
 
         //设置listeners
         findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
@@ -75,14 +75,16 @@ public class loginActivity extends AppCompatActivity implements PowerPostCallbac
     }
 
     public void loginPost(String username,String password){
-        PowerPost.request(Request_Login,getApplicationContext(),"/login")
+        PowerPost
+                .request(Request_Login,getApplicationContext(),"login")
                 .data("userName",username)
                 .data("password",password)
                 .callback(this);
     }
 
     public void registerPost(String username,String password){
-        PowerPost.request(Request_Register,getApplicationContext(),"/register")
+        PowerPost
+                .request(Request_Register,getApplicationContext(),"register")
                 .data("userName",username)
                 .data("password",password)
                 .callback(this);
