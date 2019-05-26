@@ -2,19 +2,17 @@ package cn.edu.nju.vivohackathon;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.inputmethodservice.Keyboard;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Layout;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.TextView;
 
 
 /**
@@ -34,6 +32,8 @@ public class GameFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private View mView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -66,30 +66,94 @@ public class GameFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        //TODO
-        TableLayout tableLayout = getActivity().findViewById(R.id.game_table_layout);
-        for (int i = 0; i < 12; i++) {
-            //创建一行
-            TableRow row = new TableRow(getContext()); //创建显示的内容,这里创建的是一列
-            TextView text = new TextView(getContext()); //设置显示内容
-            text.setText("");
-            text.setTextColor(Color.BLUE); //字体颜色
-            text.setBackgroundColor(Color.BLUE); //背景色
-            text.setTextSize(50); //字体大小
-            text.setGravity(Gravity.CENTER); //居中显示 //添加到
-            row.addView(text); //将一行数据添加到表格中
-            tableLayout.addView(row);
-        }
 
+//TODO
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_game, container, false);
+        super.onCreateView(inflater, container, savedInstanceState);
+        // Inflate the layout for this fragment       view =  inflater.inflate(R.layout.fragment_a, container, false);
+        mView = inflater.inflate(R.layout.fragment_game, container, false);
+
+
+        LinearLayout vertical = mView.findViewById(R.id.game_vertical);
+
+        //TableLayout tableLayout = mView.findViewById(R.id.game_vertical);
+
+        for (int i = 0; i < 4; i++) {
+            //创建一行
+            LinearLayout horizental = new LinearLayout(getContext());
+            horizental.setOrientation(LinearLayout.HORIZONTAL);
+            horizental.setWeightSum(3);
+            for (int column = 0; column < 4; ++column) {
+                /*
+                ImageView imageView = new ImageView(getContext());
+                imageView.setBackground(getActivity().getDrawable(R.drawable.image_background));
+                imageView.setImageDrawable(getActivity().getDrawable(R.drawable.ic_home_black_24dp));
+                imageView.setMinimumWidth(32);
+                imageView.setMaxWidth(32);
+                row.addView(imageView);
+
+                TextView textView = new TextView(getContext());
+                textView.setText("A");
+                textView.setWidth(32);
+                textView.setBackground(getActivity().getDrawable(R.drawable.image_background));
+                row.addView(textView);
+*/
+                Button button = new Button(getContext());
+                button.setLayoutParams(new LinearLayout.LayoutParams(160,160));
+                if (column % 2 == 0) {
+                    button.setBackground(getActivity().getDrawable(R.drawable.image_background));
+                    button.setForeground(new ColorDrawable(Color.TRANSPARENT));
+                    button.setTextSize(14);
+                    button.setText("A");
+                } else {
+                    button.setForeground(getActivity().getDrawable(R.drawable.ic_home_black_24dp));
+                    button.setBackground(getActivity().getDrawable(R.drawable.image_background));
+                }
+                horizental.addView(button);
+            }
+            vertical.addView(horizental);
+        }
+
+
+        return mView;
     }
+
+
+    private
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -129,4 +193,7 @@ public class GameFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
+
 }

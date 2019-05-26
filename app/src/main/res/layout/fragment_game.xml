@@ -6,46 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".GameFragment">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/game_table_layout"
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:shrinkColumns="*"
-        app:editable="false"
-        app:imageLayoutMode="DYNAMIC"
-        app:max="9"
-        app:space="60dp"
-        app:span="3">
+        android:layout_height="match_parent">
 
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Monday">
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Button" />
-        </android.support.design.widget.TabItem>
+        <LinearLayout
+            android:id="@+id/game_vertical"
+            android:layout_width="300dp"
+            android:layout_height="400dp"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="148dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tuesday">
-            <Button
-                android:id="@+id/button"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Button" />
-        </android.support.design.widget.TabItem>
-
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wednesday" />
-
-
-    </android.support.design.widget.TabLayout>
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
 
 </FrameLayout>
