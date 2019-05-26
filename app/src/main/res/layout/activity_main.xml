@@ -15,7 +15,7 @@
         android:layout_marginTop="164dp"
         android:text="@string/title_home"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnFetch" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/nav_view"
@@ -35,19 +35,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="148dp"
         android:layout_marginTop="16dp"
-        android:text="Login"
+        android:text="@string/login_register"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPassword" />
-
-    <Button
-        android:id="@+id/btnFetch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="64dp"
-        android:text="FetchData"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
     <EditText
         android:id="@+id/etUsername"
@@ -101,7 +91,7 @@
         android:layout_height="103dp"
         android:layout_marginStart="288dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnFetch"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
         tools:srcCompat="@tools:sample/avatars" />
 
 </android.support.constraint.ConstraintLayout>

@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        mUserInfo = UserInfo.getInstance(getApplicationContext(), this);
+        mUserInfo = new UserInfo(getApplicationContext(), this);
 
         //设置listeners
         Button loginButton = findViewById(R.id.btnLogin);
