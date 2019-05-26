@@ -15,6 +15,7 @@
 
 
     <string name="login_register">登录/注册</string>
+    <string name="recharge">充值</string>
 
     <!--SharedPreferences使用的key-->
     <string name="preference_file_key">my_preference</string>
@@ -30,5 +31,11 @@
     <string name="kind">类别</string>
     <string name="account">账号</string>
     <string name="mine">我的</string>
+    <string name="comment_hint">输入评论...</string>
+    <string name="add_comment">评论</string>
+    <string name="default_username">holyshit</string>
+    <string name="default_password">powershit</string>
+    <string name="password_hint">密码</string>
+    <string name="username_hint">用户名</string>
     <!--key-->
 </resources>
