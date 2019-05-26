@@ -6,17 +6,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
 import com.alibaba.fastjson.JSONObject;
 
-import cn.edu.nju.vivohackathon.businesslogic.comment.Comment;
 import cn.edu.nju.vivohackathon.tools.network.powerpost.PowerPostCallback;
 import cn.edu.nju.vivohackathon.tools.network.powerpost.PowerPost;
 
 public class MainActivity extends AppCompatActivity implements PowerPostCallback {
 
-    private Comment mComment;
 
     private Fragment mFragment;
     private AccountFragment accountFragment;
@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements PowerPostCallback
 
         initViews();
 
-        mComment = new Comment(getApplicationContext(), this);
 
         PowerPost
                 .request(123,getApplicationContext(),"/login")

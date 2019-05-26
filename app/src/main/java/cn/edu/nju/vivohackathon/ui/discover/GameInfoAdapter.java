@@ -27,14 +27,11 @@ public class GameInfoAdapter extends RecyclerView.Adapter<GameInfoAdapter.GameIn
         public ImageView image;
         public TextView title;
         public TextView description;
-        public Button button;
-
         public GameInfoViewHolder(View v) {
             super(v);
             image = v.findViewById(R.id.in_discover_item_iton);
             title = v.findViewById(R.id.in_discover_item_gamename);
             description = v.findViewById(R.id.in_discover_item_remarks);
-            button = v.findViewById(R.id.in_discover_item_trybutton);
         }
 
     }
@@ -64,7 +61,7 @@ public class GameInfoAdapter extends RecyclerView.Adapter<GameInfoAdapter.GameIn
             Log.i(TAG, "No image found for gameID:" + gameInfo.getGameID());
 
         }
-        viewHolder.button.setOnClickListener(new View.OnClickListener() {
+        viewHolder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int gameID = gameInfo.getGameID();

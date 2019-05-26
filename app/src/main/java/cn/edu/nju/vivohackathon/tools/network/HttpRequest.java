@@ -26,7 +26,9 @@ public class HttpRequest {
     private static final MediaType MEDIA_TYPE_XML = MediaType.parse("application/xml; charset=utf-8");//mdiatype 这个需要和服务端保持一致
     private static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");//mdiatype 这个需要和服务端保持一致
 
-    private static final String DEFAULT_SERVER = "http://172.20.10.13:8080/";
+    private static final String DEFAULT_SERVER = "http://10.0.2.2:8080/";
+
+    private static String localhost = "10.0.2.2";
 
     private static final String TAG = HttpRequest.class.getSimpleName();
 

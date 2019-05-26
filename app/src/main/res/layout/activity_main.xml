@@ -14,16 +14,10 @@
         android:layout_weight="1"
         app:layout_constraintBottom_toTopOf="@+id/discover_nav_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
     </FrameLayout>
-    <TextView
-        android:id="@+id/message"
-        android:layout_width="97dp"
-        android:layout_height="30dp"
-        android:text="@string/title_home"
-        tools:layout_editor_absoluteX="79dp"
-        tools:layout_editor_absoluteY="421dp" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/discover_nav_view"
@@ -35,69 +29,5 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/bottom_nav_menu" />
-
-    <TextView
-        android:id="@+id/tvUserName"
-        android:layout_width="83dp"
-        android:layout_height="31dp"
-        android:text="未登录"
-        tools:layout_editor_absoluteX="249dp"
-        tools:layout_editor_absoluteY="102dp" />
-
-    <TextView
-        android:id="@+id/tvMoney"
-        android:layout_width="62dp"
-        android:layout_height="27dp"
-        android:text="0"
-        tools:layout_editor_absoluteX="270dp"
-        tools:layout_editor_absoluteY="424dp" />
-
-    <ImageView
-        android:id="@+id/ivAvatar"
-        android:layout_width="104dp"
-        android:layout_height="103dp"
-        tools:layout_editor_absoluteX="79dp"
-        tools:layout_editor_absoluteY="66dp"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <Button
-        android:id="@+id/btnGetComment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="136dp"
-        android:text="获取评论(测试用)"
-        app:layout_constraintStart_toEndOf="@+id/btnAddComment"
-        app:layout_constraintTop_toTopOf="@+id/btnAddComment" />
-
-    <Button
-        android:id="@+id/btnAddComment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="68dp"
-        android:text="@string/add_comment"
-        app:layout_constraintStart_toStartOf="@+id/etComment"
-        app:layout_constraintTop_toTopOf="@+id/etComment" />
-
-    <EditText
-        android:id="@+id/etComment"
-        android:layout_width="214dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:ems="10"
-        android:hint="@string/comment_hint"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="474dp" />
-
-    <Button
-        android:id="@+id/btnRecharge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/recharge"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAddComment" />
 
 </android.support.constraint.ConstraintLayout>
