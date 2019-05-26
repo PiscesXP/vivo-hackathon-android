@@ -178,4 +178,43 @@ public class UserInfo {
                     }
                 });
     }
+
+
+    public void follow(String userID, boolean isFollow) {
+        PowerPost
+                .request(mContext, "followUser")
+                .data("userID", userID)
+                .data("type", isFollow ? 0 : 1)
+                .callback(new PowerPostCallback() {
+                    @Override
+                    public void onFail(String errorMessage) {
+                        //TODO
+                    }
+
+                    @Override
+                    public void onSuccess(JSONObject resultJson) {
+                        //TODO
+                    }
+                });
+    }
+
+    public void findUserByName(String userName) {
+        PowerPost
+                .request(mContext, "findUserByName")
+                .data("userName", userName)
+                .callback(new PowerPostCallback() {
+                    @Override
+                    public void onFail(String errorMessage) {
+                        //TODO
+                    }
+
+                    @Override
+                    public void onSuccess(JSONObject resultJson) {
+                        String userName = resultJson.getString("name");
+                        String userID = resultJson.getString("id");
+                        String userAvatarBase64 = resultJson.getString("img");
+                        //TODO
+                    }
+                });
+    }
 }
