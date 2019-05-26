@@ -14,18 +14,20 @@
             android:id="@+id/account_achievement_icon"
             android:layout_width="87dp"
             android:layout_height="85dp"
+            android:layout_marginStart="48dp"
             android:layout_marginTop="144dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/account_username"
-            tools:layout_editor_absoluteX="48dp"
             tools:src="@tools:sample/avatars" />
 
         <ImageView
             android:id="@+id/ collection"
             android:layout_width="87dp"
             android:layout_height="85dp"
+            android:layout_marginStart="48dp"
             android:layout_marginTop="64dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/account_achievement_icon"
-            tools:layout_editor_absoluteX="48dp"
             tools:src="@tools:sample/avatars" />
 
         <ImageView
@@ -42,8 +44,9 @@
             android:id="@+id/account_username"
             android:layout_width="127dp"
             android:layout_height="34dp"
+            android:layout_marginStart="48dp"
             android:text="TextView"
-            tools:layout_editor_absoluteX="48dp"
+            app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="221dp" />
 
         <Button
