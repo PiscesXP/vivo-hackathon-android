@@ -79,13 +79,13 @@
 
         <TextView
             android:id="@+id/account_amount"
-            android:layout_width="100dp"
+            android:layout_width="69dp"
             android:layout_height="22dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="500 积分"
+            android:text="500 "
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.179"
+            app:layout_constraintHorizontal_bias="0.151"
             app:layout_constraintStart_toEndOf="@+id/account_icon"
             app:layout_constraintTop_toBottomOf="@+id/account_username" />
 
@@ -124,18 +124,11 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/imageView9"
-                android:layout_width="wrap_content"
-                android:layout_height="133dp"
-                android:layout_weight="1"
-                android:src="@drawable/shizhong" />
-
-            <ImageView
                 android:id="@+id/imageView8"
                 android:layout_width="wrap_content"
                 android:layout_height="131dp"
                 android:layout_weight="1"
-                android:src="@drawable/youyong" />
+                android:src="@drawable/swim" />
 
             <ImageView
                 android:id="@+id/imageView6"
@@ -170,8 +163,8 @@
             android:id="@+id/imageAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="88dp"
+            android:layout_marginStart="68dp"
+            android:layout_marginTop="64dp"
             android:src="@android:drawable/btn_star_big_on"
             app:layout_constraintStart_toEndOf="@+id/account_amount"
             app:layout_constraintTop_toTopOf="parent" />
@@ -180,11 +173,20 @@
             android:id="@+id/imageShare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="88dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="64dp"
             android:src="@android:drawable/ic_menu_share"
             app:layout_constraintStart_toEndOf="@+id/imageAdd"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_monetization_on_black_24dp"
+            app:layout_constraintStart_toEndOf="@+id/account_amount"
+            app:layout_constraintTop_toTopOf="@+id/account_amount" />
 
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>
