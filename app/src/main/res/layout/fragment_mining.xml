@@ -15,7 +15,7 @@
             android:id="@+id/game_absolute"
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="72dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,25 +30,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btnReset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="56dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/btn_reset"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-        <Button
-            android:id="@+id/btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="112dp"
-            android:text="@string/btn_view"
-            app:layout_constraintStart_toEndOf="@+id/btnReset"
-            app:layout_constraintTop_toTopOf="@+id/btnReset" />
-
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
@@ -58,6 +39,16 @@
             android:text="@string/mining_description"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/game_absolute" />
+
+        <ImageView
+            android:id="@+id/iv_reset_mining"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:src="@drawable/ic_refresh_black_24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 

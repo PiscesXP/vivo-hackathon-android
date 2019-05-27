@@ -6,17 +6,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
-import com.alibaba.fastjson.JSONObject;
-
-import cn.edu.nju.vivohackathon.tools.network.powerpost.PowerPostCallback;
-import cn.edu.nju.vivohackathon.tools.network.powerpost.PowerPost;
+import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
-
 
     private Fragment mFragment;
     private AccountFragment accountFragment;
@@ -25,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private FriendFragment friendFragment;
     private GameFragment gameFragment;
     private MiningFragment miningFragment;
+
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -62,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
         //fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.main_fragment, miningFragment).commit();
-        mFragment = miningFragment;
+        fragmentManager.beginTransaction().replace(R.id.main_fragment, discoverFragment).commit();
+        mFragment = discoverFragment;
     }
 
     private void initViews() {
@@ -84,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().hide(mFragment)
                         .add(R.id.main_fragment, fragment).commit();
             } else {
-                getSupportFragmentManager().beginTransaction().hide(mFragment).show(fragment).commit();
+                getSupportFragmentManager().beginTransaction().hide(mFragment).show(fragment).addToBackStack("").commit();
             }
             mFragment = fragment;
         }
@@ -93,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         int count = getSupportFragmentManager().getBackStackEntryCount();
-
         if (count == 0) {
             super.onBackPressed();
             //additional code

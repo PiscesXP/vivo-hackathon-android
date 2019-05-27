@@ -17,7 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:srcCompat="@mipmap/ic_launcher_round"
+        tools:srcCompat="@mipmap/ic_launcher_round" />
 
     <TextView
         android:id="@+id/in_discover_item_gamename"
@@ -43,9 +44,10 @@
         android:id="@+id/btn_enter_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:text="进入游戏"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="38dp" />
+        app:layout_constraintTop_toTopOf="@+id/in_discover_item_gamename" />
 
 </android.support.constraint.ConstraintLayout>

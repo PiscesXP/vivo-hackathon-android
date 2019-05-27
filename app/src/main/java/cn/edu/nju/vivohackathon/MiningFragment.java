@@ -72,17 +72,27 @@ public class MiningFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        // Inflate the layout for this fragment       view =  inflater.inflate(R.layout.fragment_a, container, false);
         mView = inflater.inflate(R.layout.fragment_mining, container, false);
 
+        ((ImageView)mView.findViewById(R.id.iv_reset_mining)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"游戏重置成功",Toast.LENGTH_SHORT).show();
+                reset();
+            }
+        });
 
-        miningStart();
-
-        mImageView = mingingInit(5);
 
         return mView;
     }
 
+
+    private void reset(){
+        final AbsoluteLayout absoluteLayout = mView.findViewById(R.id.game_absolute);
+        absoluteLayout.removeAllViewsInLayout();
+        miningStart();
+        mImageView = mingingInit(5);
+    }
 
     /**
      * 初始化方格.

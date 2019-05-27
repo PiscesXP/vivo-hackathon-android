@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -69,11 +70,8 @@ public class GameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        // Inflate the layout for this fragment       view =  inflater.inflate(R.layout.fragment_a, container, false);
         mView = inflater.inflate(R.layout.fragment_game, container, false);
 
-
-        mButtonGrid = pythonInit(5);
 
         //方向按钮
         ((Button) mView.findViewById(R.id.btnPyUp)).setOnClickListener(new View.OnClickListener() {
@@ -101,8 +99,13 @@ public class GameFragment extends Fragment {
             }
         });
 
-
-        pythonStart();
+        ((ImageView) mView.findViewById(R.id.iv_reset)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"游戏重置成功",Toast.LENGTH_SHORT).show();
+                resetGame();
+            }
+        });
 
         mView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -127,7 +130,7 @@ public class GameFragment extends Fragment {
         });
 
 
-
+        resetGame();
         return mView;
     }
 
@@ -139,6 +142,7 @@ public class GameFragment extends Fragment {
         Button buttonArray[][] = new Button[Size][Size];
         mPythonSize = Size;
         LinearLayout vertical = mView.findViewById(R.id.game_vertical);
+
         for (int row = 0; row < Size; row++) {
             //创建一行
             LinearLayout horizental = new LinearLayout(getContext());
@@ -158,7 +162,6 @@ public class GameFragment extends Fragment {
         }
         return buttonArray;
     }
-
 
 
     private void pythonStart() {
@@ -234,44 +237,12 @@ public class GameFragment extends Fragment {
     }
 
 
-
-    //--------------------------
-    //Mining
-    /**
-     * 初始化方格.
-     */
-    private Button[][] miningInit(final int Size) {
-        Button buttonArray[][] = new Button[Size][Size];
-        mPythonSize = Size;
+    private void resetGame() {
         LinearLayout vertical = mView.findViewById(R.id.game_vertical);
-        for (int row = 0; row < Size; row++) {
-            //创建一行
-            LinearLayout horizental = new LinearLayout(getContext());
-            horizental.setOrientation(LinearLayout.HORIZONTAL);
-            horizental.setWeightSum(3);
-            for (int column = 0; column < Size; ++column) {
-                Button button = new Button(getContext());
-                button.setLayoutParams(new LinearLayout.LayoutParams(160, 160));
-                button.setTextSize(14);
-                button.setForeground(getActivity().getDrawable(R.drawable.p3));
-                button.setBackground(new ColorDrawable(Color.TRANSPARENT));
-                button.setText("");
-                buttonArray[row][column] = button;
-                horizental.addView(button);
-            }
-            vertical.addView(horizental);
-        }
-        return buttonArray;
+        vertical.removeAllViewsInLayout();
+        mButtonGrid = pythonInit(5);
+        pythonStart();
     }
-
-
-
-
-
-
-
-
-
 
 
     public void onButtonPressed(Uri uri) {

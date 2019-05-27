@@ -22,6 +22,7 @@ import cn.edu.nju.vivohackathon.R;
 public class GameInfoAdapter extends RecyclerView.Adapter<GameInfoAdapter.GameInfoViewHolder> {
 
     private List<GameInfo> mGameInfoList;
+    private MainActivity mMainActivity;
 
     private static final String TAG = GameInfoAdapter.class.getSimpleName();
 
@@ -30,18 +31,22 @@ public class GameInfoAdapter extends RecyclerView.Adapter<GameInfoAdapter.GameIn
         public TextView title;
         public TextView description;
         public Button button;
+
         public GameInfoViewHolder(View v) {
             super(v);
             image = v.findViewById(R.id.in_discover_item_iton);
             title = v.findViewById(R.id.in_discover_item_gamename);
+            title.setTextSize(20);
+            title.getPaint().setFakeBoldText(true);
             description = v.findViewById(R.id.in_discover_item_remarks);
             button = v.findViewById(R.id.btn_enter_game);
         }
 
     }
 
-    public GameInfoAdapter(List<GameInfo> gameInfoList) {
+    public GameInfoAdapter(List<GameInfo> gameInfoList, MainActivity mainActivity) {
         mGameInfoList = gameInfoList;
+        mMainActivity = mainActivity;
     }
 
     @NonNull
@@ -62,6 +67,14 @@ public class GameInfoAdapter extends RecyclerView.Adapter<GameInfoAdapter.GameIn
             Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             viewHolder.image.setImageBitmap(decodedByte);
         } else {
+            switch (gameInfo.getGameID()) {
+                case 1:
+                    viewHolder.image.setImageDrawable(mMainActivity.getDrawable(R.drawable.python));
+                    break;
+                case 2:
+                    viewHolder.image.setImageDrawable(mMainActivity.getDrawable(R.drawable.mining));
+                    break;
+            }
             Log.i(TAG, "No image found for gameID:" + gameInfo.getGameID());
 
         }
@@ -76,7 +89,7 @@ public class GameInfoAdapter extends RecyclerView.Adapter<GameInfoAdapter.GameIn
         viewHolder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
+                mMainActivity.switchToGame(gameInfo.getGameID());
             }
         });
     }

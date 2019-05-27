@@ -132,7 +132,7 @@ public class DiscoverFragment extends Fragment implements PowerPostCallback {
     }
 
     private void refreshRecyclerView() {
-        mGameInfoAdapter = new GameInfoAdapter(mGameInfoList);
+        mGameInfoAdapter = new GameInfoAdapter(mGameInfoList,(MainActivity) this.getActivity());
         mRecyclerView.setAdapter(mGameInfoAdapter);
     }
 
