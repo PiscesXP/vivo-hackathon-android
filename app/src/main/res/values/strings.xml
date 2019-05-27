@@ -43,5 +43,8 @@
     <string name="game_name">游戏 - Python</string>
     <string name="btn_reset">重新开始</string>
     <string name="python_description">Python游戏说明</string>
+    <string name="game_name_mining">游戏 - Mining</string>
+    <string name="mining_description">Mining游戏说明</string>
+    <string name="btn_view" >查看</string>
     <!--key-->
 </resources>

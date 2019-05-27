@@ -62,16 +62,16 @@ public class DiscoverFragment extends Fragment implements PowerPostCallback {
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
-        //TODO 加入数据
+
         mGameInfoList = new ArrayList<>();
-        mGameInfoList.add(new GameInfo("游戏1", "描述1", null, 1));
-        mGameInfoList.add(new GameInfo("游戏2", "描述2", null, 2));
+        mGameInfoList.add(new GameInfo("Python", "描述1", null, 1));
+        mGameInfoList.add(new GameInfo("Mining", "描述2", null, 2));
+        mRecyclerView.setAdapter(mGameInfoAdapter);
         refreshRecyclerView();
 
         return mView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -138,7 +138,8 @@ public class DiscoverFragment extends Fragment implements PowerPostCallback {
 
     @Override
     public void onFail(int reqID, String errorMessage) {
-        Toast.makeText(getContext(), R.string.network_error, Toast.LENGTH_LONG).show();
+        //不显示了...
+        //Toast.makeText(getContext(), R.string.network_error, Toast.LENGTH_LONG).show();
     }
 
     @Override

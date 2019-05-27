@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MotionEventCompat;
+import android.text.TextPaint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -75,11 +76,9 @@ public class MiningFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_mining, container, false);
 
 
-        mImageView = mingingInit(5);
-
-
         miningStart();
 
+        mImageView = mingingInit(5);
 
         return mView;
     }
@@ -91,7 +90,7 @@ public class MiningFragment extends Fragment {
     private ImageView[][] mingingInit(final int Size) {
         ImageView imageViewArr[][] = new ImageView[Size][Size];
         mMiningSize = Size;
-        int toLeft = 160, toTop = 150;
+        int toLeft = 160, toTop = 100;
         final AbsoluteLayout absoluteLayout = mView.findViewById(R.id.game_absolute);
         for (int row = 0; row < Size; row++) {
             //创建一行
@@ -99,15 +98,18 @@ public class MiningFragment extends Fragment {
             final int ColumnCount[] = new int[]{3, 4, 5, 4, 3};
             for (int column = 0; column < ColumnCount[row]; ++column) {
                 final ImageView imageView = new ImageView(getContext());
-                //button.setLayoutParams(new AbsoluteLayout.LayoutParams(getContext(),null));
                 imageView.setBackground(new ColorDrawable(Color.TRANSPARENT));
                 imageView.setMaxWidth(100);
-                //button.setBackground(getActivity().getDrawable(R.drawable.image_background));
-                imageView.setImageDrawable(getActivity().getDrawable(R.drawable.p3));
+                //TODO
+                if (mMining.get_grid(row, column) == null) {
+                    imageView.setImageDrawable(getActivity().getDrawable(R.drawable.p3));
+                } else {
 
+                    imageView.setImageDrawable(getActivity().getDrawable(R.drawable.p4));
+                }
                 //位置
 
-                imageView.setX(148 * column + (5-ColumnCount[row])*75 +toLeft);
+                imageView.setX(148 * column + (5 - ColumnCount[row]) * 75 + toLeft);
 
                 imageView.setY(130 * row + toTop);
                 imageView.setLayoutParams(new RelativeLayout.LayoutParams(200, 200));
@@ -122,25 +124,29 @@ public class MiningFragment extends Fragment {
 
                         mMining.mine(myrow, mycolumn);
                         imageView.setBackground(new ColorDrawable(Color.TRANSPARENT));
-                        String mine = mMining.get_grid(myrow, mycolumn);
-                        if (mine == null) {
-                            mine = "";
-                        }
+
                         //用textview替代image
                         imageView.setBackground(null);
                         imageView.setForeground(null);
                         imageView.setImageDrawable(null);
 
-                        TextView textView = new TextView(getContext());
-                        textView.setX(imageView.getX()+64);
-                        textView.setY(imageView.getY()+64);
-                        textView.setText(mine);
-                        textView.setTextSize(24);
-                        absoluteLayout.addView(textView);
                     }
                 });
                 imageViewArr[row][column] = imageView;
                 absoluteLayout.addView(imageView);
+                String mine = mMining.get_grid(myrow, mycolumn);
+                if (mine != null) {
+                    Log.d(TAG, String.format("Found at %d,%d:%s", row, column, mine));
+                    TextView textView = new TextView(getContext());
+                    textView.setX(imageView.getX() + 64 - mine.length() * 5);
+                    textView.setY(imageView.getY() + 64);
+                    textView.setText(mine);
+                    textView.setTextSize(16);
+                    TextPaint textPaint = textView.getPaint();
+                    textPaint.setFakeBoldText(true);
+                    textView.setTextColor(Color.rgb(128, 0, 128));
+                    absoluteLayout.addView(textView);
+                }
             }
         }
         return imageViewArr;
@@ -148,14 +154,10 @@ public class MiningFragment extends Fragment {
 
 
     private void miningStart() {
-        System.out.println(456);
         try {
             InputStream inputStream = getContext().getAssets().open("data.Mining");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            System.out.println(456);
             mMining = Mining.read(bufferedReader);
-            refreshGrid();
-
         } catch (Exception e) {
             Log.e(TAG, "Error on miningStart:" + e.toString());
         }
@@ -167,7 +169,11 @@ public class MiningFragment extends Fragment {
         for (int row = 0; row < mMiningSize; row++) {
             for (int column = 0; column < mMiningSize; ++column) {
                 ImageView button = mImageView[row][column];
-                setButtonImage(button, mMining.is_available(row, column));
+                if (mMining.get_grid(row, column) == null) {
+                    setButtonImage(button, false);
+                } else {
+                    setButtonImage(button, true);
+                }
             }
         }
         if (mMining.fail()) {
@@ -179,11 +185,11 @@ public class MiningFragment extends Fragment {
     }
 
     //设置图片
-    private void setButtonImage(ImageView button, boolean isAvaliable) {
-        if (isAvaliable) {
-
+    private void setButtonImage(ImageView imageView, boolean hasCircle) {
+        if (hasCircle) {
+            imageView.setImageDrawable(getActivity().getDrawable(R.drawable.p4));
         } else {
-
+            imageView.setImageDrawable(getActivity().getDrawable(R.drawable.p3));
         }
     }
 
@@ -208,7 +214,7 @@ public class MiningFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-    
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

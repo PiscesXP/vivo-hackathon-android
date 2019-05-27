@@ -15,7 +15,7 @@ import com.alibaba.fastjson.JSONObject;
 import cn.edu.nju.vivohackathon.tools.network.powerpost.PowerPostCallback;
 import cn.edu.nju.vivohackathon.tools.network.powerpost.PowerPost;
 
-public class MainActivity extends AppCompatActivity implements PowerPostCallback {
+public class MainActivity extends AppCompatActivity {
 
 
     private Fragment mFragment;
@@ -60,64 +60,11 @@ public class MainActivity extends AppCompatActivity implements PowerPostCallback
 
         initViews();
 
-
-        PowerPost
-                .request(123,getApplicationContext(),"/login")
-                .data("userName","admin")
-                .callback(this);
-
-        //设置listeners
-        /*
-        Button loginButton = findViewById(R.id.btnLogin);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mUserInfo.isLogin()) {
-                    Toast.makeText(getApplicationContext(), "账号已经登录", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String username = ((EditText) findViewById(R.id.etUsername)).getText().toString();
-                String password = ((EditText) findViewById(R.id.etPassword)).getText().toString();
-                if (username.matches("^.{6,16}$") && password.matches("^.{6,16}$")) {
-                    mUserInfo.register(username, password);
-                } else {
-                    Toast.makeText(getApplicationContext(), "账号/密码太短", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        Button addCommentButton = findViewById(R.id.btnAddComment);
-        addCommentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String comment = ((EditText) findViewById(R.id.etUsername)).getText().toString();
-                mComment.addComment(0, comment);
-
-            }
-        });
-
-        Button getCommentButton = findViewById(R.id.btnGetComment);
-        getCommentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mComment.getCommentList(0);
-            }
-        });
-*/
-
-        //发现页面
-        /*
-        RecyclerView recyclerView = findViewById(R.id.discover_recycleview);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        GameInfoAdapter gameInfoAdapter = new GameInfoAdapter(new ArrayList<GameInfo>());
-        recyclerView.setAdapter(gameInfoAdapter);
-*/
         //fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_fragment, miningFragment).commit();
         mFragment = miningFragment;
-}
+    }
 
     private void initViews() {
         discoverFragment = new DiscoverFragment();
@@ -130,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements PowerPostCallback
 
     /**
      * 切换fragment
-     * */
+     */
     private void switchFragment(Fragment fragment) {
         if (mFragment != fragment) {
             if (!fragment.isAdded()) {
@@ -144,12 +91,27 @@ public class MainActivity extends AppCompatActivity implements PowerPostCallback
     }
 
     @Override
-    public void onFail(int reqID, String errorMessage) {
+    public void onBackPressed() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
 
+        if (count == 0) {
+            super.onBackPressed();
+            //additional code
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
     }
 
-    @Override
-    public void onSuccess(int reqID, JSONObject resultJson) {
 
+    //乱加的
+    public void switchToGame(int gameID) {
+        switch (gameID) {
+            case 1:
+                switchFragment(gameFragment);
+                break;
+            case 2:
+                switchFragment(miningFragment);
+                break;
+        }
     }
 }

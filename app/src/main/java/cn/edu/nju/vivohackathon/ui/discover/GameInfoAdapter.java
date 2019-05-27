@@ -1,5 +1,6 @@
 package cn.edu.nju.vivohackathon.ui.discover;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
@@ -9,11 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
+import cn.edu.nju.vivohackathon.MainActivity;
 import cn.edu.nju.vivohackathon.R;
 
 public class GameInfoAdapter extends RecyclerView.Adapter<GameInfoAdapter.GameInfoViewHolder> {
@@ -26,11 +29,13 @@ public class GameInfoAdapter extends RecyclerView.Adapter<GameInfoAdapter.GameIn
         public ImageView image;
         public TextView title;
         public TextView description;
+        public Button button;
         public GameInfoViewHolder(View v) {
             super(v);
             image = v.findViewById(R.id.in_discover_item_iton);
             title = v.findViewById(R.id.in_discover_item_gamename);
             description = v.findViewById(R.id.in_discover_item_remarks);
+            button = v.findViewById(R.id.btn_enter_game);
         }
 
     }
@@ -66,6 +71,12 @@ public class GameInfoAdapter extends RecyclerView.Adapter<GameInfoAdapter.GameIn
                 int gameID = gameInfo.getGameID();
                 Log.i(TAG, "Enter gameID:" + gameID);
                 //TODO 进入游戏
+            }
+        });
+        viewHolder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
             }
         });
     }
