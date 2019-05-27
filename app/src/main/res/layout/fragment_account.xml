@@ -11,13 +11,79 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="167dp"
+            android:layout_height="148dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="352dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="代码挑战者"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/imageView102"
+                android:layout_width="137dp"
+                android:layout_height="129dp"
+                android:background="@android:color/holo_orange_dark"
+                android:src="@drawable/jishufuwu" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="167dp"
+            android:layout_height="148dp"
+            android:layout_marginStart="216dp"
+            android:layout_marginTop="352dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Python长蛇"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="137dp"
+                android:layout_height="129dp"
+                android:background="@color/design_default_color_primary"
+                android:scrollbarTrackVertical="@drawable/she"
+                android:src="@drawable/she"
+                />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/account_icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="36dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/yule"
+            tools:src="@drawable/yule"
+            tools:srcCompat="@drawable/yule" />
+
         <TextView
             android:id="@+id/account_amount"
             android:layout_width="100dp"
             android:layout_height="22dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="account_amount"
+            android:text="500 积分"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.179"
             app:layout_constraintStart_toEndOf="@+id/account_icon"
@@ -29,21 +95,11 @@
             android:layout_height="22dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="account_username"
+            android:text="玩家"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.179"
             app:layout_constraintStart_toEndOf="@+id/account_icon"
             app:layout_constraintTop_toBottomOf="@+id/account_id" />
-
-        <ImageView
-            android:id="@+id/account_icon"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="36dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_launcher_background" />
 
         <TextView
             android:id="@+id/account_id"
@@ -51,38 +107,64 @@
             android:layout_height="22dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="44dp"
-            android:text="account_id"
+            android:text="ID:12345"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.179"
             app:layout_constraintStart_toEndOf="@+id/account_icon"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/Achievements"
-            android:layout_width="0dp"
-            android:layout_height="131dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="184dp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="390dp"
+            android:layout_height="124dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="175dp"
+            android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layoutManager="GridLayoutManager"
-            tools:listitem="@layout/recycler_view_item"
-            tools:spanCount="5" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/Creations"
-            android:layout_width="363dp"
-            android:layout_height="248dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.437"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.745"
-            tools:listitem="@layout/recycler_view_item_1" />
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="wrap_content"
+                android:layout_height="133dp"
+                android:layout_weight="1"
+                android:src="@drawable/shizhong" />
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="wrap_content"
+                android:layout_height="131dp"
+                android:layout_weight="1"
+                android:src="@drawable/youyong" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="133dp"
+                android:layout_weight="1"
+                android:src="@drawable/huahua" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="wrap_content"
+                android:layout_height="133dp"
+                android:layout_weight="1"
+                android:src="@drawable/zuanshi" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="134dp"
+                android:layout_weight="1"
+                android:src="@drawable/fabu" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="131dp"
+                android:layout_weight="1"
+                android:src="@drawable/chat" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/imageAdd"
@@ -103,5 +185,6 @@
             android:src="@android:drawable/ic_menu_share"
             app:layout_constraintStart_toEndOf="@+id/imageAdd"
             app:layout_constraintTop_toTopOf="parent" />
+
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>
