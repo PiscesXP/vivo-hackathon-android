@@ -1,6 +1,6 @@
 package cn.edu.nju.vivohackathon.game.python;
 
-public class coordinate {
+public class Coordinate {
 	public int x, y;
 }
 

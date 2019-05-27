@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.login.loginActivity"></activity>
+        <activity android:name=".ui.login.LoginActivity"></activity>
         <activity
             android:name=".GuideActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

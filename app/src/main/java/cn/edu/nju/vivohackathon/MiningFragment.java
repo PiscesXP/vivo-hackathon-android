@@ -56,7 +56,7 @@ public class MiningFragment extends Fragment {
     }
 
 
-    public static GameFragment newInstance(String param1, String param2) {
+    public static GameFragment newInstance() {
         GameFragment fragment = new GameFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -174,25 +174,7 @@ public class MiningFragment extends Fragment {
     }
 
 
-    //刷新网格
-    private void refreshGrid() {
-        for (int row = 0; row < mMiningSize; row++) {
-            for (int column = 0; column < mMiningSize; ++column) {
-                ImageView button = mImageView[row][column];
-                if (mMining.get_grid(row, column) == null) {
-                    setButtonImage(button, false);
-                } else {
-                    setButtonImage(button, true);
-                }
-            }
-        }
-        if (mMining.fail()) {
-            Toast.makeText(getContext(), "通关失败", Toast.LENGTH_LONG).show();
-        }
-        if (mMining.pass()) {
-            Toast.makeText(getContext(), "通关成功", Toast.LENGTH_LONG).show();
-        }
-    }
+
 
     //设置图片
     private void setButtonImage(ImageView imageView, boolean hasCircle) {
@@ -215,7 +197,6 @@ public class MiningFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
-        } else {
         }
     }
 

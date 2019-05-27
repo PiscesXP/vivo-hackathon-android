@@ -44,7 +44,6 @@ public class DataUtility {
             }
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
-            e.printStackTrace();
         }
         return stringBuilder.toString();
     }

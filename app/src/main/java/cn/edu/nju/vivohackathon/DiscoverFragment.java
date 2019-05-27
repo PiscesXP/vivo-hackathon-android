@@ -39,13 +39,6 @@ public class DiscoverFragment extends Fragment implements PowerPostCallback {
     public DiscoverFragment() {
     }
 
-    public static DiscoverFragment newInstance(String param1, String param2) {
-        DiscoverFragment fragment = new DiscoverFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +76,6 @@ public class DiscoverFragment extends Fragment implements PowerPostCallback {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
-        } else {
         }
     }
 
@@ -132,21 +124,19 @@ public class DiscoverFragment extends Fragment implements PowerPostCallback {
     }
 
     private void refreshRecyclerView() {
-        mGameInfoAdapter = new GameInfoAdapter(mGameInfoList,(MainActivity) this.getActivity());
+        mGameInfoAdapter = new GameInfoAdapter(mGameInfoList, (MainActivity) this.getActivity());
         mRecyclerView.setAdapter(mGameInfoAdapter);
     }
 
     @Override
     public void onFail(int reqID, String errorMessage) {
         //不显示了...
-        //Toast.makeText(getContext(), R.string.network_error, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onSuccess(int reqID, JSONObject resultJson) {
         switch (reqID) {
             case REQUEST_GET_GAME_LIST:
-                //TODO
                 JSONArray array = resultJson.getJSONArray("");
                 for (int i = 0; i < array.size(); ++i) {
                     fetchGameInfo(array.getIntValue(i));

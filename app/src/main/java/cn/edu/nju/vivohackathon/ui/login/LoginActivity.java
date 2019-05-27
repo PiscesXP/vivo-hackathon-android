@@ -3,6 +3,7 @@ package cn.edu.nju.vivohackathon.ui.login;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -14,13 +15,14 @@ import cn.edu.nju.vivohackathon.R;
 import cn.edu.nju.vivohackathon.tools.network.powerpost.PowerPost;
 import cn.edu.nju.vivohackathon.tools.network.powerpost.PowerPostCallback;
 
-public class loginActivity extends AppCompatActivity implements PowerPostCallback {
+public class LoginActivity extends AppCompatActivity implements PowerPostCallback {
 
 
 
     public final int Request_Login  = 1 ;
     public final int Request_Register = 2 ;
 
+    private final static String TAG = LoginActivity.class.getSimpleName();
 
 
     @Override
@@ -62,7 +64,7 @@ public class loginActivity extends AppCompatActivity implements PowerPostCallbac
     @Override
     public void onFail(int reqID, String errorMessage) {
         Toast.makeText(this,R.string.network_error, Toast.LENGTH_LONG).show();
-        System.out.println(errorMessage);
+        Log.e(TAG,errorMessage);
     }
 
     @Override

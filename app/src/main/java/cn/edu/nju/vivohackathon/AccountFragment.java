@@ -22,7 +22,7 @@ public class AccountFragment extends Fragment implements PowerPostCallback {
 
     
 
-    public static AccountFragment newInstance(String param1, String param2) {
+    public static AccountFragment newInstance() {
         AccountFragment fragment = new AccountFragment();
         Bundle args = new Bundle();
         return fragment;
@@ -51,9 +51,7 @@ public class AccountFragment extends Fragment implements PowerPostCallback {
 
     @Override
     public void onSuccess(int reqID, JSONObject resultJson) {
-        switch(reqID){
 
-        }
     }
 
 

@@ -8,8 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
 
-import java.util.Stack;
-
 public class MainActivity extends AppCompatActivity {
 
     private Fragment mFragment;

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,17 +23,6 @@ import java.io.InputStreamReader;
 
 import cn.edu.nju.vivohackathon.game.python.Python;
 
-import static android.support.constraint.Constraints.TAG;
-
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link GameFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link GameFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class GameFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -54,7 +42,7 @@ public class GameFragment extends Fragment {
     }
 
 
-    public static GameFragment newInstance(String param1, String param2) {
+    public static GameFragment newInstance() {
         GameFragment fragment = new GameFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -102,7 +90,7 @@ public class GameFragment extends Fragment {
         ((ImageView) mView.findViewById(R.id.iv_reset)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"游戏重置成功",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "游戏重置成功", Toast.LENGTH_SHORT).show();
                 resetGame();
             }
         });
@@ -165,11 +153,9 @@ public class GameFragment extends Fragment {
 
 
     private void pythonStart() {
-        System.out.println(456);
         try {
             InputStream inputStream = getContext().getAssets().open("data.Python");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            System.out.println(456);
             mPython = Python.read(bufferedReader);
             refreshGrid();
 
@@ -206,9 +192,6 @@ public class GameFragment extends Fragment {
                 Button button = mButtonGrid[row][column];
                 setButtonImage(button, mPython.get_grid(row, column));
             }
-        }
-        if (mPython.fail()) {
-
         }
         if (mPython.pass()) {
             Toast.makeText(getContext(), "通关成功", Toast.LENGTH_LONG).show();
@@ -256,7 +239,6 @@ public class GameFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
-        } else {
         }
     }
 

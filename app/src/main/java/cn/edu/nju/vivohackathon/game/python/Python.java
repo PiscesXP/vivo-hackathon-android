@@ -1,14 +1,11 @@
 package cn.edu.nju.vivohackathon.game.python;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
-
-import cn.edu.nju.vivohackathon.game.python.coordinate;
 
 public class Python {
 	private String stage;
@@ -17,9 +14,9 @@ public class Python {
 	private int row, col;
 	private int[][] grid;
 	private int pylength;
-	private coordinate[] python;
+	private Coordinate[] python;
 
-	private coordinate[] changec;
+	private Coordinate[] changec;
 
 
 	private Map<Integer, Integer> word;
@@ -41,9 +38,9 @@ public class Python {
 		this.target = target;
 		this.step = step;
 
-		changec = new coordinate[3];
+		changec = new Coordinate[3];
 		for (int i = 0; i < 3; i++)
-			changec[i] = new coordinate();
+			changec[i] = new Coordinate();
 
 		word = new HashMap<Integer, Integer>();
 		rword = new HashMap<Integer, Integer>();
@@ -65,9 +62,9 @@ public class Python {
 		//Ĭ��python�տ�ʼ�ڵ�һ�У�����length����С����col
 		if (length > col)
 			length = col;
-		python = new coordinate[length];
+		python = new Coordinate[length];
 		for (int i = 0; i < length; i++) {
-			python[i] = new coordinate();
+			python[i] = new Coordinate();
 			python[i].x = 0;
 			python[i].y = i;
 			grid[0][i] = pybody;
@@ -112,7 +109,7 @@ public class Python {
 	public int move(int direction) {
 		if (step <= 0) return fail;
 
-		coordinate head = new coordinate();
+		Coordinate head = new Coordinate();
 		head.x = python[pylength - 1].x;
 		head.y = python[pylength - 1].y;
 		switch(direction) {
@@ -163,7 +160,7 @@ public class Python {
 			default: return fail;
 		}
 
-		coordinate tail = python[0];
+		Coordinate tail = python[0];
 		changec[0] = tail;
 		grid[tail.x][tail.y] = 0;
 		for (int i = 0; i < pylength - 1; i++) {
@@ -178,7 +175,7 @@ public class Python {
 	}
 
 	//���move�ɹ������øú�����ȡ�ı��λ��
-	public coordinate[] move_change() {
+	public Coordinate[] move_change() {
 		return changec;
 	}
 

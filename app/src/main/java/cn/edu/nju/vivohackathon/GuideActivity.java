@@ -6,23 +6,20 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cn.edu.nju.vivohackathon.ui.login.loginActivity;
+import cn.edu.nju.vivohackathon.ui.login.LoginActivity;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 public class GuideActivity extends AppCompatActivity {
-    /**
-     * Whether or not the system UI should be auto-hidden after
-     * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
-     */
+
+
     private static final boolean AUTO_HIDE = true;
 
     /**
@@ -88,7 +85,7 @@ public class GuideActivity extends AppCompatActivity {
         mContentView = findViewById(R.id.fullscreen_content);
         hide();
 
-        final Intent intent = new Intent(this, loginActivity.class);
+        final Intent intent = new Intent(this, LoginActivity.class);
         Timer timer=new Timer();
 
         TimerTask task=new TimerTask(){
