@@ -6,8 +6,11 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -100,6 +103,30 @@ public class GameFragment extends Fragment {
 
 
         pythonStart();
+
+        mView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = MotionEventCompat.getActionMasked(event);
+
+                switch (action) {
+                    case (MotionEvent.ACTION_DOWN):
+                        Log.d(TAG, "Action was DOWN");
+                        pythonDown();
+                        return true;
+                    case (MotionEvent.ACTION_UP):
+                        Log.d(TAG, "Action was UP");
+                        pythonUp();
+                        return true;
+                    default:
+                        Log.d(TAG, "Action was CANCEL");
+
+                }
+                return false;
+            }
+        });
+
+
 
         return mView;
     }

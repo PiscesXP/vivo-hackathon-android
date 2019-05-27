@@ -40,5 +40,8 @@
     <string name="register">注  册</string>
     <string name="friend_menu">好友</string>
     <string name="createion_menu">创作</string>
+    <string name="game_name">游戏 - Python</string>
+    <string name="btn_reset">重新开始</string>
+    <string name="python_description">Python游戏说明</string>
     <!--key-->
 </resources>
