@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -39,6 +40,8 @@ public class GameFragment extends Fragment {
     private int mPythonSize = 0;
     private Button mButtonGrid[][];
     private Python mPython;
+
+    private static final String TAG = GameFragment.class.getSimpleName();
 
     private OnFragmentInteractionListener mListener;
 
@@ -95,6 +98,9 @@ public class GameFragment extends Fragment {
             }
         });
 
+
+        pythonStart();
+
         return mView;
     }
 
@@ -123,6 +129,9 @@ public class GameFragment extends Fragment {
                     button.setForeground(getActivity().getDrawable(R.drawable.ic_home_black_24dp));
                     button.setBackground(getActivity().getDrawable(R.drawable.image_background));
                 }
+                button.setForeground(new ColorDrawable(Color.TRANSPARENT));
+                button.setBackground(getActivity().getDrawable(R.drawable.image_background));
+                button.setText("");
                 buttonArray[row][column] = button;
                 horizental.addView(button);
             }
@@ -132,41 +141,76 @@ public class GameFragment extends Fragment {
     }
 
     private void pythonStart() {
+        System.out.println(456);
         try {
-            InputStream inputStream = getActivity().getAssets().open("data.Python");
+            InputStream inputStream = getContext().getAssets().open("data.Python");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            System.out.println(456);
             mPython = Python.read(bufferedReader);
-            for (int row = 0; row < mPythonSize; row++) {
-                for (int column = 0; column < mPythonSize; ++column) {
-                    Button button = mButtonGrid[row][column];
-                    switch (mPython.get_grid(row, column)) {
-                        //TODO 设置图像
-                    }
-                }
-            }
+            refreshGrid();
+
         } catch (Exception e) {
-            Log.i(TAG, "Error on pythonStart:" + e.toString());
+            Log.e(TAG, "Error on pythonStart:" + e.toString());
         }
     }
 
     //方向键
     private void pythonLeft() {
         mPython.move(Python.left);
+        refreshGrid();
     }
 
     private void pythonUp() {
         mPython.move(Python.up);
+        refreshGrid();
     }
 
     private void pythonDown() {
         mPython.move(Python.down);
+        refreshGrid();
     }
 
     private void pythonRight() {
         mPython.move(Python.right);
+        refreshGrid();
     }
 
+    //刷新网格
+    private void refreshGrid() {
+        for (int row = 0; row < mPythonSize; row++) {
+            for (int column = 0; column < mPythonSize; ++column) {
+                Button button = mButtonGrid[row][column];
+                setButtonImage(button, mPython.get_grid(row, column));
+            }
+        }
+        if (mPython.fail()) {
 
+        }
+        if (mPython.pass()) {
+            Toast.makeText(getContext(), "通关成功", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    //设置图片
+    private void setButtonImage(Button button, int type) {
+        button.setText("");
+        switch (type) {
+            case Python.pyhead:
+                button.setForeground(getActivity().getDrawable(R.drawable.pyhead));
+                break;
+            case Python.pybody:
+                button.setForeground(getActivity().getDrawable(R.drawable.pybody));
+                break;
+            case Python.empty:
+                button.setForeground(new ColorDrawable(Color.TRANSPARENT));
+                break;
+            default:
+                //alphabet
+                char c = (char) type;
+                button.setForeground(new ColorDrawable(Color.TRANSPARENT));
+                button.setText("" + c);
+        }
+    }
 
 
     public void onButtonPressed(Uri uri) {
