@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements PowerPostCallback
     private DiscoverFragment discoverFragment;
     private FriendFragment friendFragment;
     private GameFragment gameFragment;
+    private MiningFragment miningFragment;
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -114,8 +115,8 @@ public class MainActivity extends AppCompatActivity implements PowerPostCallback
 */
         //fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.main_fragment, gameFragment).commit();
-        mFragment = gameFragment;
+        fragmentManager.beginTransaction().replace(R.id.main_fragment, miningFragment).commit();
+        mFragment = miningFragment;
 }
 
     private void initViews() {
@@ -124,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements PowerPostCallback
         friendFragment = new FriendFragment();
         creationFragment = new CreationFragment();
         gameFragment = new GameFragment();
+        miningFragment = new MiningFragment();
     }
 
     /**

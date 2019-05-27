@@ -147,15 +147,7 @@ public class GameFragment extends Fragment {
             for (int column = 0; column < Size; ++column) {
                 Button button = new Button(getContext());
                 button.setLayoutParams(new LinearLayout.LayoutParams(160, 160));
-                if (column % 2 == 0) {
-                    button.setBackground(getActivity().getDrawable(R.drawable.image_background));
-                    button.setForeground(new ColorDrawable(Color.TRANSPARENT));
-                    button.setTextSize(14);
-                    button.setText("A");
-                } else {
-                    button.setForeground(getActivity().getDrawable(R.drawable.ic_home_black_24dp));
-                    button.setBackground(getActivity().getDrawable(R.drawable.image_background));
-                }
+                button.setTextSize(14);
                 button.setForeground(new ColorDrawable(Color.TRANSPARENT));
                 button.setBackground(getActivity().getDrawable(R.drawable.image_background));
                 button.setText("");
@@ -166,6 +158,8 @@ public class GameFragment extends Fragment {
         }
         return buttonArray;
     }
+
+
 
     private void pythonStart() {
         System.out.println(456);
@@ -238,6 +232,46 @@ public class GameFragment extends Fragment {
                 button.setText("" + c);
         }
     }
+
+
+
+    //--------------------------
+    //Mining
+    /**
+     * 初始化方格.
+     */
+    private Button[][] miningInit(final int Size) {
+        Button buttonArray[][] = new Button[Size][Size];
+        mPythonSize = Size;
+        LinearLayout vertical = mView.findViewById(R.id.game_vertical);
+        for (int row = 0; row < Size; row++) {
+            //创建一行
+            LinearLayout horizental = new LinearLayout(getContext());
+            horizental.setOrientation(LinearLayout.HORIZONTAL);
+            horizental.setWeightSum(3);
+            for (int column = 0; column < Size; ++column) {
+                Button button = new Button(getContext());
+                button.setLayoutParams(new LinearLayout.LayoutParams(160, 160));
+                button.setTextSize(14);
+                button.setForeground(getActivity().getDrawable(R.drawable.p3));
+                button.setBackground(new ColorDrawable(Color.TRANSPARENT));
+                button.setText("");
+                buttonArray[row][column] = button;
+                horizental.addView(button);
+            }
+            vertical.addView(horizental);
+        }
+        return buttonArray;
+    }
+
+
+
+
+
+
+
+
+
 
 
     public void onButtonPressed(Uri uri) {
