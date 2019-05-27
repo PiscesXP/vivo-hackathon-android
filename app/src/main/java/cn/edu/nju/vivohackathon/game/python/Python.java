@@ -90,7 +90,7 @@ public class Python {
 	}
 	
 	public int get_grid(int x, int y) {
-		return grid[x][y];
+		return rword.get(grid[x][y]);
 	}
 	
 	//python���ƶ�����
@@ -189,9 +189,9 @@ public class Python {
 		return needs.isEmpty();
 	}
 
-	public static Python read(String filename) {
+	public static Python read(BufferedReader br) {
 		Python newgame = null;
-		try (FileReader reader = new FileReader(filename);BufferedReader br = new BufferedReader(reader)) {
+		try  {
 			String stage, target;
 			int step;
 			if (br.readLine().equals("@stage")) {
