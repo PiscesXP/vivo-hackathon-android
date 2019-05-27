@@ -38,7 +38,6 @@ import cn.edu.nju.vivohackathon.game.python.Python;
  * create an instance of this fragment.
  */
 public class MiningFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
     private View mView;
@@ -110,7 +109,6 @@ public class MiningFragment extends Fragment {
                 final ImageView imageView = new ImageView(getContext());
                 imageView.setBackground(new ColorDrawable(Color.TRANSPARENT));
                 imageView.setMaxWidth(100);
-                //TODO
                 if (mMining.get_grid(row, column) == null) {
                     imageView.setImageDrawable(getActivity().getDrawable(R.drawable.p3));
                 } else {
@@ -207,7 +205,6 @@ public class MiningFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
