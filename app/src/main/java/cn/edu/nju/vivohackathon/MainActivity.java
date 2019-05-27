@@ -30,9 +30,6 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_1:
                     switchFragment(discoverFragment);
                     return true;
-                case R.id.navigation_2:
-                    switchFragment(creationFragment);
-                    return true;
                 case R.id.navigation_3:
                     switchFragment(friendFragment);
                     return true;
