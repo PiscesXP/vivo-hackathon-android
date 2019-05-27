@@ -1,0 +1,17 @@
+@stage
+1
+@target
+a commodity, article, or service brought in from abroad for sale.
+@step
+10
+@grid
+5,5
+*****
+impor
+*cxcc
+**tdd
+*x***
+@python
+3
+@needs
+import
